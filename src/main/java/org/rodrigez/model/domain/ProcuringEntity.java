@@ -17,12 +17,8 @@ public class ProcuringEntity {
     @Column(name = "name")
     private String name;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "address_id", referencedColumnName = "address_id")
     private Address address;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "contact_point_id", referencedColumnName = "contact_point_id")
     private ContactPoint contactPoint;
 
     @Column(name = "kind")

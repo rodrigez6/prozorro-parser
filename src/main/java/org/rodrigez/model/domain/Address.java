@@ -4,28 +4,22 @@ import org.rodrigez.model.dto.AddressDTO;
 
 import javax.persistence.*;
 
-@Entity
-@Table(name = "address", schema = "prozorro")
+@Embeddable
 public class Address {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "address_id")
-    private int addressId;
-
-    @Column(name = "street_address")
+    @Column(name = "address_street_address")
     private String streetAddress;
 
-    @Column(name = "locality")
+    @Column(name = "address_locality")
     private String locality;
 
-    @Column(name = "region")
+    @Column(name = "address_region")
     private String region;
 
-    @Column(name = "postal_code")
+    @Column(name = "address_postal_code")
     private String postalCode;
 
-    @Column(name = "country_name")
+    @Column(name = "address_country_name")
     private String countryName;
 
     public Address() {
@@ -42,7 +36,6 @@ public class Address {
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("Address{");
-        sb.append("addressId=").append(addressId);
         sb.append(", streetAddress='").append(streetAddress).append('\'');
         sb.append(", locality='").append(locality).append('\'');
         sb.append(", region='").append(region).append('\'');

@@ -5,28 +5,22 @@ import org.rodrigez.model.dto.ContactPointDTO;
 import javax.persistence.*;
 import java.net.URL;
 
-@Entity
-@Table(name = "contact_point", schema = "prozorro")
+@Embeddable
 public class ContactPoint {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "contact_point_id")
-    private int contactPointId;
-
-    @Column(name = "name")
+    @Column(name = "contact_point_name")
     private String name;
 
-    @Column(name = "email")
+    @Column(name = "contact_point_email")
     private String email;
 
-    @Column(name = "telephone")
+    @Column(name = "contact_point_telephone")
     private String telephone;
 
-    @Column(name = "fax_number")
+    @Column(name = "contact_point_fax_number")
     private String faxNumber;
 
-    @Column(name = "url")
+    @Column(name = "contact_point_url")
     private String url;
 
     public ContactPoint() {
@@ -48,7 +42,6 @@ public class ContactPoint {
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("ContactPoint{");
-        sb.append("contactPointId=").append(contactPointId);
         sb.append(", name='").append(name).append('\'');
         sb.append(", email='").append(email).append('\'');
         sb.append(", telephone='").append(telephone).append('\'');
