@@ -10,6 +10,7 @@ import org.json.simple.JSONValue;
 import org.rodrigez.model.domain.ProcuringEntity;
 import org.rodrigez.model.domain.Tender;
 import org.rodrigez.model.dto.TenderDTO;
+import org.rodrigez.repository.ItemRepository;
 import org.rodrigez.repository.ProcuringEntityRepository;
 import org.rodrigez.repository.TenderRepository;
 import org.rodrigez.service.Loader;
@@ -27,8 +28,10 @@ public class TendersLoader implements Loader {
     TenderRepository tenderRepository;
     @Autowired
     ProcuringEntityRepository procuringEntityRepository;
+    @Autowired
+    ItemRepository itemRepository;
 
-    private static int count = 30; // for testing
+    private static int count = 1; // for testing
     private static OkHttpClient client = new OkHttpClient();
     private static List<String> tenderIDs = new ArrayList<>();
     Gson gson = new Gson();
@@ -55,6 +58,11 @@ public class TendersLoader implements Loader {
             JSONObject jsonObject = (JSONObject) JSONValue.parse(jsonString);
             JSONArray jsonContractsList = (JSONArray) jsonObject.get("data");
 
+            // for testing
+            if(count--<0){
+                return;
+            }
+
             for (Object jsObj : jsonContractsList) {
                 JSONObject joItem = (JSONObject) jsObj;
                 String tenderId = joItem.get("id").toString();
@@ -62,11 +70,6 @@ public class TendersLoader implements Loader {
             }
 
             JSONObject jsonNextPage = (JSONObject) jsonObject.get("next_page");
-
-            // for testing
-            if(count--<0){
-                return;
-            }
 
             if(jsonNextPage!=null){
                 String nextPageURI = (String) jsonNextPage.get("uri");
@@ -80,6 +83,8 @@ public class TendersLoader implements Loader {
 
     private void loadTender(String url){
 
+
+
         Request request = new Request.Builder()
                 .url(url)
                 .build();
@@ -91,8 +96,8 @@ public class TendersLoader implements Loader {
             JSONObject jsonData = (JSONObject) jsonObject.get("data");
             TenderDTO tenderDTO = gson.fromJson(jsonData.toJSONString(), TenderDTO.class);
             Tender tender = new Tender(tenderDTO);
-            info(tenderDTO);
-            //persistTender(tender);
+            //info(tenderDTO);
+            persistTender(tender);
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -107,6 +112,8 @@ public class TendersLoader implements Loader {
         tender.setProcuringEntity(procuringEntity);
 
         tenderRepository.save(tender);
+
+
 
     }
 

@@ -2,10 +2,7 @@ package org.rodrigez.model.domain;
 
 import org.rodrigez.model.dto.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.net.URI;
 import java.util.Date;
 
@@ -16,6 +13,10 @@ public class Item {
     @Id
     @Column(name = "item_id")
     private String itemId;
+
+    @ManyToOne
+    @JoinColumn(name = "tender_id")
+    private Tender tender;
 
     @Column(name = "description")
     private String description;
@@ -74,6 +75,10 @@ public class Item {
     @Column(name = "related_lot")
     private String relatedLot;
 
+    public void setTender(Tender tender) {
+        this.tender = tender;
+    }
+
     public Item() {
     }
 
@@ -131,6 +136,7 @@ public class Item {
     public String toString() {
         final StringBuilder sb = new StringBuilder("Item{");
         sb.append("itemId='").append(itemId).append('\'');
+        sb.append(", tender=").append(tender.getTenderId());
         sb.append(", description='").append(description).append('\'');
         sb.append(", classificationScheme='").append(classificationScheme).append('\'');
         sb.append(", classificationId='").append(classificationId).append('\'');

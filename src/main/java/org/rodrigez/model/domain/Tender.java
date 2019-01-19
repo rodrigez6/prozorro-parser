@@ -1,13 +1,12 @@
 package org.rodrigez.model.domain;
 
-import org.rodrigez.model.dto.GuaranteeDTO;
-import org.rodrigez.model.dto.PeriodDTO;
-import org.rodrigez.model.dto.TenderDTO;
-import org.rodrigez.model.dto.ValueDTO;
+import org.rodrigez.model.dto.*;
 
 import javax.persistence.*;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "tender", schema = "prozorro")
@@ -23,9 +22,12 @@ public class Tender {
     @Column(name = "description")
     private String description;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne
     @JoinColumn(name = "procuring_entity_id", referencedColumnName = "procuring_entity_id")
     private ProcuringEntity procuringEntity;
+
+    @OneToMany(mappedBy = "tender", cascade = CascadeType.ALL)
+    private List<Item> itemList = new ArrayList<>();
 
     @Column(name = "value_amount")
     private float valueAmount;
@@ -92,6 +94,14 @@ public class Tender {
         this.procuringEntity = procuringEntity;
     }
 
+    public List<Item> getItemList() {
+        return itemList;
+    }
+
+    public String getTenderId() {
+        return tenderId;
+    }
+
     public Tender() {
     }
 
@@ -102,6 +112,12 @@ public class Tender {
         this.description = dto.getDescription();
 
         this.procuringEntity = new ProcuringEntity(dto.getProcuringEntityDTO());
+
+        for(ItemDTO itemDTO:dto.getItemDTOList()){
+            Item item = new Item(itemDTO);
+            item.setTender(this);
+            itemList.add(item);
+        }
 
         ValueDTO value = dto.getValueDTO();
         if(value!=null){
@@ -164,6 +180,7 @@ public class Tender {
         sb.append(", title='").append(title).append('\'');
         sb.append(", description='").append(description).append('\'');
         sb.append(", procuringEntity=").append(procuringEntity);
+        sb.append(", itemList=").append(itemList);
         sb.append(", valueAmount=").append(valueAmount);
         sb.append(", valueCurrency='").append(valueCurrency).append('\'');
         sb.append(", valueAddedTaxIncluded=").append(valueAddedTaxIncluded);
