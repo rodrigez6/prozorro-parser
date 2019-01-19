@@ -21,6 +21,26 @@ public class ContactPointDTO {
     @SerializedName("url")
     private URL url;
 
+    public String getName() {
+        return name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getTelephone() {
+        return telephone;
+    }
+
+    public String getFaxNumber() {
+        return faxNumber;
+    }
+
+    public URL getUrl() {
+        return url;
+    }
+
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("ContactPointDTO{");

@@ -1,4 +1,4 @@
-package org.rodrigez.service;
+package org.rodrigez.service.loader;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -10,6 +10,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 import org.rodrigez.model.dto.ContractDTO;
 import org.rodrigez.model.dto.DocumentDTO;
+import org.rodrigez.service.Loader;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;

@@ -23,9 +23,9 @@ public class Tender {
     @Column(name = "description")
     private String description;
 
-//    @ManyToOne
-//    @JoinColumn(name = "procuring_entity_id", referencedColumnName = "procuring_entity_id")
-//    private ProcuringEntity procuringEntity;
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "procuring_entity_id", referencedColumnName = "procuring_entity_id")
+    private ProcuringEntity procuringEntity;
 
     @Column(name = "value_amount")
     private float valueAmount;
@@ -84,15 +84,24 @@ public class Tender {
     @Column(name = "status")
     private String status;
 
+    public ProcuringEntity getProcuringEntity() {
+        return procuringEntity;
+    }
+
+    public void setProcuringEntity(ProcuringEntity procuringEntity) {
+        this.procuringEntity = procuringEntity;
+    }
+
     public Tender() {
     }
 
     public Tender(TenderDTO dto) {
+
         this.tenderId = dto.getTenderId();
         this.title = dto.getTitle();
         this.description = dto.getDescription();
 
-        //this.procuringEntity = new ProcuringEntity();
+        this.procuringEntity = new ProcuringEntity(dto.getProcuringEntityDTO());
 
         ValueDTO value = dto.getValueDTO();
         if(value!=null){
@@ -154,6 +163,7 @@ public class Tender {
         sb.append("tenderId='").append(tenderId).append('\'');
         sb.append(", title='").append(title).append('\'');
         sb.append(", description='").append(description).append('\'');
+        sb.append(", procuringEntity=").append(procuringEntity);
         sb.append(", valueAmount=").append(valueAmount);
         sb.append(", valueCurrency='").append(valueCurrency).append('\'');
         sb.append(", valueAddedTaxIncluded=").append(valueAddedTaxIncluded);

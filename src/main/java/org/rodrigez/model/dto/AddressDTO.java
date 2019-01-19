@@ -19,6 +19,26 @@ public class AddressDTO {
     @SerializedName("countryName")
     private String countryName;
 
+    public String getStreetAddress() {
+        return streetAddress;
+    }
+
+    public String getLocality() {
+        return locality;
+    }
+
+    public String getRegion() {
+        return region;
+    }
+
+    public String getPostalCode() {
+        return postalCode;
+    }
+
+    public String getCountryName() {
+        return countryName;
+    }
+
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("AddressDTO{");
