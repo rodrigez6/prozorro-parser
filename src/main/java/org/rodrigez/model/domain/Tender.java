@@ -29,6 +29,39 @@ public class Tender {
     @OneToMany(mappedBy = "tender", cascade = CascadeType.ALL)
     private List<Item> itemList = new ArrayList<>();
 
+    @OneToMany(mappedBy = "tender", cascade = CascadeType.ALL)
+    private List<Feature> featureList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "tender", cascade = CascadeType.ALL)
+    private List<Document> documentList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "tender", cascade = CascadeType.ALL)
+    private List<Lot> lotList = new ArrayList<>();
+
+//    @OneToMany(mappedBy = "tender", cascade = CascadeType.ALL)
+//    private List<Question> questionList = new ArrayList<>();
+//
+//    @OneToMany(mappedBy = "bids", cascade = CascadeType.ALL)
+//    private List<BidDTO> bidDTOList = new ArrayList<>();
+//
+//    @OneToMany(mappedBy = "awards", cascade = CascadeType.ALL)
+//    private List<AwardDTO> awardList = new ArrayList<>();
+//
+//    @OneToMany(mappedBy = "contracts", cascade = CascadeType.ALL)
+//    private List<ContractDTO> contractDTOList = new ArrayList<>();
+//
+//    @OneToMany(mappedBy = "complaints", cascade = CascadeType.ALL)
+//    private List<Complaint> complaintList = new ArrayList<>();
+//
+//    @OneToMany(mappedBy = "cancellations", cascade = CascadeType.ALL)
+//    private List<CancellationDTO> cancellationDTOList = new ArrayList<>();
+//
+//    @OneToMany(mappedBy = "funders", cascade = CascadeType.ALL)
+//    private List<OrganizationDTO> funderList = new ArrayList<>();
+//
+//    @OneToMany(mappedBy = "revisions", cascade = CascadeType.ALL)
+//    private List<RevisionDTO> revisionDTOList = new ArrayList<>();
+
     @Column(name = "value_amount")
     private float valueAmount;
 
@@ -102,6 +135,138 @@ public class Tender {
         return tenderId;
     }
 
+    public void setTenderId(String tenderId) {
+        this.tenderId = tenderId;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public List<Feature> getFeatureList() {
+        return featureList;
+    }
+
+    public List<Document> getDocumentList() {
+        return documentList;
+    }
+
+    public List<Lot> getLotList() {
+        return lotList;
+    }
+
+//    public List<Question> getQuestionList() {
+//        return questionList;
+//    }
+//
+//    public List<BidDTO> getBidDTOList() {
+//        return bidDTOList;
+//    }
+//
+//    public List<AwardDTO> getAwardList() {
+//        return awardList;
+//    }
+//
+//    public List<ContractDTO> getContractDTOList() {
+//        return contractDTOList;
+//    }
+//
+//    public List<Complaint> getComplaintList() {
+//        return complaintList;
+//    }
+//
+//    public List<CancellationDTO> getCancellationDTOList() {
+//        return cancellationDTOList;
+//    }
+//
+//    public List<OrganizationDTO> getFunderList() {
+//        return funderList;
+//    }
+//
+//    public List<RevisionDTO> getRevisionDTOList() {
+//        return revisionDTOList;
+//    }
+
+    public float getValueAmount() {
+        return valueAmount;
+    }
+
+    public String getValueCurrency() {
+        return valueCurrency;
+    }
+
+    public boolean isValueAddedTaxIncluded() {
+        return valueAddedTaxIncluded;
+    }
+
+    public float getGuaranteeAmount() {
+        return guaranteeAmount;
+    }
+
+    public String getGuaranteeCurrency() {
+        return guaranteeCurrency;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public float getMinimalStepAmount() {
+        return minimalStepAmount;
+    }
+
+    public String getMinimalStepCurrency() {
+        return minimalStepCurrency;
+    }
+
+    public boolean isMinimalStepAddedTaxIncluded() {
+        return minimalStepAddedTaxIncluded;
+    }
+
+    public Date getEnquiryPeriodStartDate() {
+        return enquiryPeriodStartDate;
+    }
+
+    public Date getEnquiryPeriodEndDate() {
+        return enquiryPeriodEndDate;
+    }
+
+    public Date getTenderPeriodStartDate() {
+        return tenderPeriodStartDate;
+    }
+
+    public Date getTenderPeriodEndDate() {
+        return tenderPeriodEndDate;
+    }
+
+    public Date getAuctionPeriodStartDate() {
+        return auctionPeriodStartDate;
+    }
+
+    public Date getAuctionPeriodEndDate() {
+        return auctionPeriodEndDate;
+    }
+
+    public String getAuctionUrl() {
+        return auctionUrl;
+    }
+
+    public Date getAwardPeriodStartDate() {
+        return awardPeriodStartDate;
+    }
+
+    public Date getAwardPeriodEndDate() {
+        return awardPeriodEndDate;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
     public Tender() {
     }
 
@@ -117,6 +282,24 @@ public class Tender {
             Item item = new Item(itemDTO);
             item.setTender(this);
             itemList.add(item);
+        }
+
+        for(FeatureDTO featureDTO:dto.getFeatureDTOList()){
+            Feature feature = new Feature(featureDTO);
+            feature.setTender(this);
+            this.featureList.add(feature);
+        }
+
+        for(DocumentDTO documentDTO:dto.getDocumentDTOList()){
+            Document document = new Document(documentDTO);
+            document.setTender(this);
+            this.documentList.add(document);
+        }
+
+        for(LotDTO lotDTO:dto.getLotDTOList()){
+            Lot lot = new Lot(lotDTO);
+            lot.setTender(this);
+            this.lotList.add(lot);
         }
 
         ValueDTO value = dto.getValueDTO();
@@ -181,6 +364,17 @@ public class Tender {
         sb.append(", description='").append(description).append('\'');
         sb.append(", procuringEntity=").append(procuringEntity);
         sb.append(", itemList=").append(itemList);
+        sb.append(", featureList=").append(featureList);
+        sb.append(", documentList=").append(documentList);
+        sb.append(", lotList=").append(lotList);
+//        sb.append(", questionList=").append(questionList);
+//        sb.append(", bidDTOList=").append(bidDTOList);
+//        sb.append(", awardList=").append(awardList);
+//        sb.append(", contractDTOList=").append(contractDTOList);
+//        sb.append(", complaintList=").append(complaintList);
+//        sb.append(", cancellationDTOList=").append(cancellationDTOList);
+//        sb.append(", funderList=").append(funderList);
+//        sb.append(", revisionDTOList=").append(revisionDTOList);
         sb.append(", valueAmount=").append(valueAmount);
         sb.append(", valueCurrency='").append(valueCurrency).append('\'');
         sb.append(", valueAddedTaxIncluded=").append(valueAddedTaxIncluded);

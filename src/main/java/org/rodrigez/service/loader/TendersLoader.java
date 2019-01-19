@@ -31,7 +31,7 @@ public class TendersLoader implements Loader {
     @Autowired
     ItemRepository itemRepository;
 
-    private static int count = 1; // for testing
+    private static int count = 100; // for testing
     private static OkHttpClient client = new OkHttpClient();
     private static List<String> tenderIDs = new ArrayList<>();
     Gson gson = new Gson();
@@ -42,6 +42,7 @@ public class TendersLoader implements Loader {
         loadPage(basicUrl);
         for(String tenderID : tenderIDs){
             String tenderUrl = basicUrl + "/" + tenderID;
+            System.out.println(tenderUrl);
             loadTender(tenderUrl);
         }
     }
@@ -97,12 +98,18 @@ public class TendersLoader implements Loader {
             TenderDTO tenderDTO = gson.fromJson(jsonData.toJSONString(), TenderDTO.class);
             Tender tender = new Tender(tenderDTO);
             //info(tenderDTO);
-            persistTender(tender);
+            info(tender);
+            //persistTender(tender);
 
         } catch (IOException e) {
             e.printStackTrace();
         }
 
+    }
+
+    private void info(Tender tender) {
+        tender.getDocumentList().forEach(System.out::println);
+        //tender.getLotList().forEach(System.out::println);
     }
 
     private void persistTender(Tender tender){
@@ -118,11 +125,11 @@ public class TendersLoader implements Loader {
     }
 
     private void info(TenderDTO tenderDTO){
-        System.out.println(tenderDTO.getTenderId());
+        //System.out.println(tenderDTO.getTenderId());
         tenderDTO.getQuestionDTOList().forEach(System.out::println);
         tenderDTO.getFunderList().forEach(System.out::println);
         tenderDTO.getBidDTOList().forEach(System.out::println);
-        tenderDTO.getLotDTOList().forEach(System.out::println);
+        //tenderDTO.getLotDTOList().forEach(System.out::println);
         tenderDTO.getRevisionDTOList().forEach(System.out::println);
         tenderDTO.getAwardList().forEach(System.out::println);
         //tenderDTO.getItemDTOList().forEach(System.out::println);
@@ -130,7 +137,7 @@ public class TendersLoader implements Loader {
         tenderDTO.getCancellationDTOList().forEach(System.out::println);
         tenderDTO.getComplaintDTOList().forEach(System.out::println);
         tenderDTO.getDocumentDTOList().forEach(System.out::println);
-        tenderDTO.getFeatureDTOList().forEach(System.out::println);
+        //tenderDTO.getFeatureDTOList().forEach(System.out::println);
     }
 
 }

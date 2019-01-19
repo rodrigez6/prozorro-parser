@@ -22,7 +22,31 @@ public class FeatureDTO {
     private String description;
 
     @SerializedName("enum")
-    private List<String> valuesList;
+    private List<FeatureValueDTO> valuesList;
+
+    public String getCode() {
+        return code;
+    }
+
+    public String getFeatureOf() {
+        return featureOf;
+    }
+
+    public String getRelatedItem() {
+        return relatedItem;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public List<FeatureValueDTO> getValuesList() {
+        return valuesList;
+    }
 
     @Override
     public String toString() {

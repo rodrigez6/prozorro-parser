@@ -38,6 +38,50 @@ public class DocumentDTO {
     @SerializedName("relatedItem")
     private String relatedItem;
 
+    public String getId() {
+        return id;
+    }
+
+    public String getDocumentType() {
+        return documentType;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public String getFormat() {
+        return format;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public Date getDatePublished() {
+        return datePublished;
+    }
+
+    public Date getDateModified() {
+        return dateModified;
+    }
+
+    public String getLanguage() {
+        return language;
+    }
+
+    public String getDocumentOf() {
+        return documentOf;
+    }
+
+    public String getRelatedItem() {
+        return relatedItem;
+    }
+
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("DocumentDTO{");

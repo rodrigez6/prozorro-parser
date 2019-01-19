@@ -72,11 +72,22 @@ public class Item {
     @Column(name = "delivery_location_elevation")
     private String deliveryLocationElevation;
 
-    @Column(name = "related_lot")
-    private String relatedLot;
+    @ManyToOne
+    @JoinColumn(name = "lot_id")
+    private Lot lot;
+
+
 
     public void setTender(Tender tender) {
         this.tender = tender;
+    }
+
+    public String getItemId() {
+        return itemId;
+    }
+
+    public void setItemId(String itemId) {
+        this.itemId = itemId;
     }
 
     public Item() {
@@ -129,7 +140,6 @@ public class Item {
             this.deliveryLocationElevation = deliveryLocation.getElevation();
         }
 
-        this.relatedLot = dto.getRelatedLot();
     }
 
     @Override
@@ -155,7 +165,6 @@ public class Item {
         sb.append(", deliveryLocationLatitude='").append(deliveryLocationLatitude).append('\'');
         sb.append(", deliveryLocationLongitude='").append(deliveryLocationLongitude).append('\'');
         sb.append(", deliveryLocationElevation='").append(deliveryLocationElevation).append('\'');
-        sb.append(", relatedLot='").append(relatedLot).append('\'');
         sb.append('}');
         return sb.toString();
     }
