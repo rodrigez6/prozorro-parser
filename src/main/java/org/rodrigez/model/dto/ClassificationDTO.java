@@ -18,6 +18,22 @@ public class ClassificationDTO {
     @SerializedName("uri")
     private URI uri;
 
+    public String getScheme() {
+        return scheme;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public URI getUri() {
+        return uri;
+    }
+
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("ClassificationDTO{");

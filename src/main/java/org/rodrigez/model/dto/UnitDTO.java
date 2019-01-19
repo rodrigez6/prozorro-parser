@@ -12,6 +12,14 @@ public class UnitDTO {
     @SerializedName("name")
     private String name;
 
+    public String getCode() {
+        return code;
+    }
+
+    public String getName() {
+        return name;
+    }
+
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("UnitDTO{");

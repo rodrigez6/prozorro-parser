@@ -36,6 +36,46 @@ public class ItemDTO {
     @SerializedName("relatedLot")
     private String relatedLot;
 
+    public String getId() {
+        return id;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public ClassificationDTO getClassificationDTO() {
+        return classificationDTO;
+    }
+
+    public List<ClassificationDTO> getAdditionalClassificationDTOList() {
+        return additionalClassificationDTOList;
+    }
+
+    public UnitDTO getUnitDTO() {
+        return unitDTO;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public PeriodDTO getDeliveryDate() {
+        return deliveryDate;
+    }
+
+    public AddressDTO getDeliveryAddressDTO() {
+        return deliveryAddressDTO;
+    }
+
+    public LocationDTO getDeliveryLocationDTO() {
+        return deliveryLocationDTO;
+    }
+
+    public String getRelatedLot() {
+        return relatedLot;
+    }
+
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("ItemDTO{");

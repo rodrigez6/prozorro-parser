@@ -28,7 +28,7 @@ public class TendersLoader implements Loader {
     @Autowired
     ProcuringEntityRepository procuringEntityRepository;
 
-    private static int count = 10; // for testing
+    private static int count = 30; // for testing
     private static OkHttpClient client = new OkHttpClient();
     private static List<String> tenderIDs = new ArrayList<>();
     Gson gson = new Gson();
@@ -91,7 +91,8 @@ public class TendersLoader implements Loader {
             JSONObject jsonData = (JSONObject) jsonObject.get("data");
             TenderDTO tenderDTO = gson.fromJson(jsonData.toJSONString(), TenderDTO.class);
             Tender tender = new Tender(tenderDTO);
-            persistTender(tender);
+            info(tenderDTO);
+            //persistTender(tender);
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -107,6 +108,22 @@ public class TendersLoader implements Loader {
 
         tenderRepository.save(tender);
 
+    }
+
+    private void info(TenderDTO tenderDTO){
+        System.out.println(tenderDTO.getTenderId());
+        tenderDTO.getQuestionDTOList().forEach(System.out::println);
+        tenderDTO.getFunderList().forEach(System.out::println);
+        tenderDTO.getBidDTOList().forEach(System.out::println);
+        tenderDTO.getLotDTOList().forEach(System.out::println);
+        tenderDTO.getRevisionDTOList().forEach(System.out::println);
+        tenderDTO.getAwardList().forEach(System.out::println);
+        //tenderDTO.getItemDTOList().forEach(System.out::println);
+        tenderDTO.getContractDTOList().forEach(System.out::println);
+        tenderDTO.getCancellationDTOList().forEach(System.out::println);
+        tenderDTO.getComplaintDTOList().forEach(System.out::println);
+        tenderDTO.getDocumentDTOList().forEach(System.out::println);
+        tenderDTO.getFeatureDTOList().forEach(System.out::println);
     }
 
 }

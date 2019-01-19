@@ -13,6 +13,18 @@ public class LocationDTO {
     @SerializedName("elevation")
     private String elevation;
 
+    public String getLatitude() {
+        return latitude;
+    }
+
+    public String getLongitude() {
+        return longitude;
+    }
+
+    public String getElevation() {
+        return elevation;
+    }
+
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("LocationDTO{");
