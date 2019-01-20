@@ -1,6 +1,6 @@
 package org.rodrigez;
 
-import org.rodrigez.service.loader.TendersLoader;
+import org.rodrigez.controller.TendersLoader;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;

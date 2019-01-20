@@ -1,4 +1,4 @@
-package org.rodrigez.service.loader;
+package org.rodrigez.service;
 
 import org.rodrigez.model.domain.Item;
 import org.rodrigez.model.domain.Lot;

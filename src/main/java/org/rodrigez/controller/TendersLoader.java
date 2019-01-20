@@ -1,4 +1,4 @@
-package org.rodrigez.service.loader;
+package org.rodrigez.controller;
 
 import com.google.gson.Gson;
 import okhttp3.OkHttpClient;
@@ -9,7 +9,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 import org.rodrigez.model.domain.Tender;
 import org.rodrigez.model.dto.TenderDTO;
-import org.rodrigez.service.Loader;
+import org.rodrigez.service.TenderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

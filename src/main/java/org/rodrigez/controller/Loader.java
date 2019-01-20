@@ -1,4 +1,4 @@
-package org.rodrigez.service;
+package org.rodrigez.controller;
 
 import org.springframework.stereotype.Component;
 
