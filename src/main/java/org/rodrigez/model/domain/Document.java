@@ -4,6 +4,7 @@ import org.rodrigez.model.dto.DocumentDTO;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.Objects;
 
 @Entity
 @Table(name = "document", schema = "prozorro")
@@ -12,6 +13,18 @@ public class Document {
     @Id
     @Column(name = "document_id")
     private String documentId;
+
+    @ManyToOne
+    @JoinColumn(name = "tender_id")
+    private Tender tender;
+
+    @ManyToOne
+    @JoinColumn(name = "item_id")
+    private Item item;
+
+    @ManyToOne
+    @JoinColumn(name = "lot_id")
+    private Lot lot;
 
     @Column(name = "document_type")
     private String documentType;
@@ -33,18 +46,6 @@ public class Document {
 
     @Column(name = "language")
     private String language;
-
-    @ManyToOne
-    @JoinColumn(name = "tender_id")
-    private Tender tender;
-
-    @ManyToOne
-    @JoinColumn(name = "item_id")
-    private Item item;
-
-    @ManyToOne
-    @JoinColumn(name = "lot_id")
-    private Lot lot;
 
     public void setTender(Tender tender) {
         this.tender = tender;
@@ -70,28 +71,19 @@ public class Document {
         this.datePublished = dto.getDatePublished();
         this.dateModified = dto.getDateModified();
         this.language = dto.getLanguage();
+    }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Document document = (Document) o;
+        return documentId.equals(document.documentId);
+    }
 
-        // TODO: 19.01.19 Подгрузка існуючих обєктів(перенести в сервіси)
-        String relatedItemId = dto.getRelatedItem();
-        switch (dto.getDocumentOf()){
-            case "tender" : {
-                this.tender = new Tender();
-                // подгрузить з бд відповідний тендер
-                this.tender.setTenderId(relatedItemId);
-                break;
-            }
-            case "item" : {
-                this.item = new Item();
-                this.item.setItemId(relatedItemId);
-                break;
-            }
-            case "lot" : {
-                this.lot = new Lot();
-                this.lot.setLotId(relatedItemId);
-                break;
-            }
-        }
+    @Override
+    public int hashCode() {
+        return Objects.hash(documentId);
     }
 
     @Override
@@ -105,9 +97,15 @@ public class Document {
         sb.append(", datePublished=").append(datePublished);
         sb.append(", dateModified=").append(dateModified);
         sb.append(", language='").append(language).append('\'');
-        sb.append(", tender=").append(tender.getTenderId());
-        sb.append(", item=").append(item.getItemId());
-        sb.append(", lot=").append(lot.getLotId());
+        if(tender!=null){
+            sb.append(", tender=").append(tender.getTenderId());
+        }
+        if(item!=null){
+            sb.append(", item=").append(item.getItemId());
+        }
+        if(lot!=null){
+            sb.append(", lot=").append(lot.getLotId());
+        }
         sb.append('}');
         return sb.toString();
     }

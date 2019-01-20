@@ -18,7 +18,7 @@ public class ItemDTO {
     @SerializedName("additionalClassifications")
     private List<ClassificationDTO> additionalClassificationDTOList;
 
-    @SerializedName("unitDTO")
+    @SerializedName("unit")
     private UnitDTO unitDTO;
 
     @SerializedName("quantity")

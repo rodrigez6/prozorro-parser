@@ -1,10 +1,14 @@
 package org.rodrigez.model.domain;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 import org.rodrigez.model.dto.*;
 
 import javax.persistence.*;
 import java.net.URI;
-import java.util.Date;
+import java.util.*;
 
 @Entity
 @Table(name = "item", schema = "prozorro")
@@ -17,6 +21,20 @@ public class Item {
     @ManyToOne
     @JoinColumn(name = "tender_id")
     private Tender tender;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "lot_id")
+    private Lot lot;
+
+    @OneToMany(mappedBy = "item", cascade = CascadeType.ALL)
+    @Fetch(FetchMode.SELECT)
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private Set<Document> documents = new HashSet<>();
+
+    @OneToMany(mappedBy = "item", cascade = CascadeType.ALL)
+    @Fetch(FetchMode.SELECT)
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private Set<Feature> features = new HashSet<>();
 
     @Column(name = "description")
     private String description;
@@ -72,11 +90,11 @@ public class Item {
     @Column(name = "delivery_location_elevation")
     private String deliveryLocationElevation;
 
-    @ManyToOne
-    @JoinColumn(name = "lot_id")
-    private Lot lot;
 
 
+    public void setLot(Lot lot) {
+        this.lot = lot;
+    }
 
     public void setTender(Tender tender) {
         this.tender = tender;
@@ -88,6 +106,16 @@ public class Item {
 
     public void setItemId(String itemId) {
         this.itemId = itemId;
+    }
+
+    public void addFeature(Feature feature){
+        feature.setItem(this);
+        features.add(feature);
+    }
+
+    public void addDocument(Document document){
+        document.setItem(this);
+        documents.add(document);
     }
 
     public Item() {
@@ -143,10 +171,26 @@ public class Item {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Item item = (Item) o;
+        return itemId.equals(item.itemId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(itemId);
+    }
+
+    @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("Item{");
         sb.append("itemId='").append(itemId).append('\'');
         sb.append(", tender=").append(tender.getTenderId());
+        sb.append(", lot=").append(lot.getLotId());
+        sb.append(", documents=").append(documents);
+        sb.append(", features=").append(features);
         sb.append(", description='").append(description).append('\'');
         sb.append(", classificationScheme='").append(classificationScheme).append('\'');
         sb.append(", classificationId='").append(classificationId).append('\'');

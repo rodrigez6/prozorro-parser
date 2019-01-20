@@ -6,6 +6,8 @@ import org.rodrigez.model.dto.ProcuringEntityDTO;
 
 import javax.persistence.*;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "procuring_entity", schema = "prozorro")
@@ -14,6 +16,9 @@ public class ProcuringEntity {
     @Id
     @Column(name = "procuring_entity_id")
     private String procuringEntityId;
+
+    @OneToMany(mappedBy = "procuringEntity")
+    private List<Tender> tenderList = new ArrayList<>();
 
     @Column(name = "name")
     private String name;
@@ -50,6 +55,62 @@ public class ProcuringEntity {
 
     @Column(name = "kind")
     private String kind;
+
+    public String getProcuringEntityId() {
+        return procuringEntityId;
+    }
+
+    public List<Tender> getTenderList() {
+        return tenderList;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getAddressStreetAddress() {
+        return addressStreetAddress;
+    }
+
+    public String getAddressLocality() {
+        return addressLocality;
+    }
+
+    public String getAddressRegion() {
+        return addressRegion;
+    }
+
+    public String getAddressPostalCode() {
+        return addressPostalCode;
+    }
+
+    public String getAddressCountryName() {
+        return addressCountryName;
+    }
+
+    public String getContactPointName() {
+        return contactPointName;
+    }
+
+    public String getContactPointEmail() {
+        return contactPointEmail;
+    }
+
+    public String getContactPointTelephone() {
+        return contactPointTelephone;
+    }
+
+    public String getContactPointFaxNumber() {
+        return contactPointFaxNumber;
+    }
+
+    public String getContactPointUrl() {
+        return contactPointUrl;
+    }
+
+    public String getKind() {
+        return kind;
+    }
 
     public ProcuringEntity() {
     }
@@ -88,6 +149,7 @@ public class ProcuringEntity {
     public String toString() {
         final StringBuilder sb = new StringBuilder("ProcuringEntity{");
         sb.append("procuringEntityId='").append(procuringEntityId).append('\'');
+        sb.append(", tenderList=").append(tenderList);
         sb.append(", name='").append(name).append('\'');
         sb.append(", addressStreetAddress='").append(addressStreetAddress).append('\'');
         sb.append(", addressLocality='").append(addressLocality).append('\'');

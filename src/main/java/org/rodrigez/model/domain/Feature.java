@@ -1,6 +1,5 @@
 package org.rodrigez.model.domain;
 
-import com.google.gson.annotations.SerializedName;
 import org.rodrigez.model.dto.FeatureDTO;
 import org.rodrigez.model.dto.FeatureValueDTO;
 
@@ -8,6 +7,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "feature" , schema = "prozorro")
@@ -21,11 +21,16 @@ public class Feature implements Serializable {
     @JoinColumn(name = "tender_id")
     private Tender tender;
 
-    @Column(name = "feature_of")
-    private String featureOf;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "lot_id")
+    private Lot lot;
 
-    @Column(name = "related_item")
-    private String relatedItem;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "item_id")
+    private Item item;
+
+    @OneToMany(mappedBy = "feature", cascade = CascadeType.ALL)
+    private List<FeatureValue> featureValueList = new ArrayList<>();
 
     @Column(name = "title")
     private String title;
@@ -33,11 +38,18 @@ public class Feature implements Serializable {
     @Column(name = "description")
     private String description;
 
-    @OneToMany(mappedBy = "feature", cascade = CascadeType.ALL)
-    private List<FeatureValue> featureValueList = new ArrayList<>();
+
 
     public void setTender(Tender tender) {
         this.tender = tender;
+    }
+
+    public void setLot(Lot lot) {
+        this.lot = lot;
+    }
+
+    public void setItem(Item item) {
+        this.item = item;
     }
 
     public String getFeatureId() {
@@ -49,8 +61,6 @@ public class Feature implements Serializable {
 
     public Feature(FeatureDTO dto) {
         this.featureId = dto.getCode();
-        this.featureOf = dto.getFeatureOf();
-        this.relatedItem = dto.getRelatedItem();
         this.title = dto.getTitle();
         this.description = dto.getDescription();
 
@@ -62,12 +72,25 @@ public class Feature implements Serializable {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Feature feature = (Feature) o;
+        return featureId.equals(feature.featureId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(featureId);
+    }
+
+    @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("Feature{");
         sb.append("featureId='").append(featureId).append('\'');
-        sb.append(", tender=").append(tender);
-        sb.append(", featureOf='").append(featureOf).append('\'');
-        sb.append(", relatedItem='").append(relatedItem).append('\'');
+        sb.append(", tender=").append(tender.getTenderId());
+        sb.append(", lot=").append(lot.getLotId());
+        sb.append(", item=").append(item.getItemId());
         sb.append(", title='").append(title).append('\'');
         sb.append(", description='").append(description).append('\'');
         sb.append(", featureValueList=").append(featureValueList);

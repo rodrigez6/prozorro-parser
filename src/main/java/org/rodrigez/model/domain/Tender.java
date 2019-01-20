@@ -4,9 +4,7 @@ import org.rodrigez.model.dto.*;
 
 import javax.persistence.*;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Entity
 @Table(name = "tender", schema = "prozorro")
@@ -22,21 +20,21 @@ public class Tender {
     @Column(name = "description")
     private String description;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "procuring_entity_id", referencedColumnName = "procuring_entity_id")
     private ProcuringEntity procuringEntity;
 
     @OneToMany(mappedBy = "tender", cascade = CascadeType.ALL)
-    private List<Item> itemList = new ArrayList<>();
+    private Set<Item> items = new HashSet<>();
 
     @OneToMany(mappedBy = "tender", cascade = CascadeType.ALL)
-    private List<Feature> featureList = new ArrayList<>();
+    private Set<Feature> features = new HashSet<>();
 
     @OneToMany(mappedBy = "tender", cascade = CascadeType.ALL)
-    private List<Document> documentList = new ArrayList<>();
+    private Set<Document> documents = new HashSet<>();
 
     @OneToMany(mappedBy = "tender", cascade = CascadeType.ALL)
-    private List<Lot> lotList = new ArrayList<>();
+    private Set<Lot> lots = new HashSet<>();
 
 //    @OneToMany(mappedBy = "tender", cascade = CascadeType.ALL)
 //    private List<Question> questionList = new ArrayList<>();
@@ -127,8 +125,8 @@ public class Tender {
         this.procuringEntity = procuringEntity;
     }
 
-    public List<Item> getItemList() {
-        return itemList;
+    public Set<Item> getItems() {
+        return items;
     }
 
     public String getTenderId() {
@@ -147,16 +145,16 @@ public class Tender {
         return description;
     }
 
-    public List<Feature> getFeatureList() {
-        return featureList;
+    public Set<Feature> getFeatures() {
+        return features;
     }
 
-    public List<Document> getDocumentList() {
-        return documentList;
+    public Set<Document> getDocuments() {
+        return documents;
     }
 
-    public List<Lot> getLotList() {
-        return lotList;
+    public Set<Lot> getLots() {
+        return lots;
     }
 
 //    public List<Question> getQuestionList() {
@@ -267,6 +265,26 @@ public class Tender {
         return status;
     }
 
+    public void addDocument(Document document){
+        document.setTender(this);
+        documents.add(document);
+    }
+
+    public void addLot(Lot lot) {
+        lot.setTender(this);
+        lots.add(lot);
+    }
+
+    public void addItem(Item item){
+        item.setTender(this);
+        items.add(item);
+    }
+
+    public void addFeature(Feature feature){
+        feature.setTender(this);
+        features.add(feature);
+    }
+
     public Tender() {
     }
 
@@ -277,30 +295,6 @@ public class Tender {
         this.description = dto.getDescription();
 
         this.procuringEntity = new ProcuringEntity(dto.getProcuringEntityDTO());
-
-        for(ItemDTO itemDTO:dto.getItemDTOList()){
-            Item item = new Item(itemDTO);
-            item.setTender(this);
-            itemList.add(item);
-        }
-
-        for(FeatureDTO featureDTO:dto.getFeatureDTOList()){
-            Feature feature = new Feature(featureDTO);
-            feature.setTender(this);
-            this.featureList.add(feature);
-        }
-
-        for(DocumentDTO documentDTO:dto.getDocumentDTOList()){
-            Document document = new Document(documentDTO);
-            document.setTender(this);
-            this.documentList.add(document);
-        }
-
-        for(LotDTO lotDTO:dto.getLotDTOList()){
-            Lot lot = new Lot(lotDTO);
-            lot.setTender(this);
-            this.lotList.add(lot);
-        }
 
         ValueDTO value = dto.getValueDTO();
         if(value!=null){
@@ -362,11 +356,11 @@ public class Tender {
         sb.append("tenderId='").append(tenderId).append('\'');
         sb.append(", title='").append(title).append('\'');
         sb.append(", description='").append(description).append('\'');
-        sb.append(", procuringEntity=").append(procuringEntity);
-        sb.append(", itemList=").append(itemList);
-        sb.append(", featureList=").append(featureList);
-        sb.append(", documentList=").append(documentList);
-        sb.append(", lotList=").append(lotList);
+        sb.append(", procuringEntity=").append(procuringEntity.getProcuringEntityId());
+        sb.append(", items=").append(items);
+        sb.append(", features=").append(features);
+        sb.append(", documents=").append(documents);
+        sb.append(", lots=").append(lots);
 //        sb.append(", questionList=").append(questionList);
 //        sb.append(", bidDTOList=").append(bidDTOList);
 //        sb.append(", awardList=").append(awardList);

@@ -1,15 +1,14 @@
 package org.rodrigez.model.domain;
 
-import org.rodrigez.model.dto.GuaranteeDTO;
-import org.rodrigez.model.dto.LotDTO;
-import org.rodrigez.model.dto.PeriodDTO;
-import org.rodrigez.model.dto.ValueDTO;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+import org.rodrigez.model.dto.*;
 
 import javax.persistence.*;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Entity
 @Table(name = "lot", schema = "prozorro")
@@ -24,7 +23,19 @@ public class Lot {
     private Tender tender;
 
     @OneToMany(mappedBy = "lot", cascade = CascadeType.ALL)
-    private List<Item> itemList = new ArrayList<>();
+    @Fetch(FetchMode.SELECT)
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private Set<Item> items = new HashSet<>();
+
+    @OneToMany(mappedBy = "lot", cascade = CascadeType.ALL)
+    @Fetch(FetchMode.SELECT)
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private Set<Feature> features = new HashSet<>();
+
+    @OneToMany(mappedBy = "lot", cascade = CascadeType.ALL)
+    @Fetch(FetchMode.SELECT)
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private Set<Document> documents = new HashSet<>();
 
     @Column(name = "title")
     private String title;
@@ -86,11 +97,22 @@ public class Lot {
         this.tender = tender;
     }
 
+    public void addItem(Item item){
+        item.setLot(this);
+        items.add(item);
+    }
+
+    public void addFeature(Feature feature){
+        feature.setLot(this);
+        features.add(feature);
+    }
+
     public Lot() {
     }
 
     public Lot(LotDTO dto) {
         this.lotId = dto.getId();
+
         this.title = dto.getTitle();
         this.description = dto.getDescription();
 
@@ -131,9 +153,26 @@ public class Lot {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Lot lot = (Lot) o;
+        return lotId.equals(lot.lotId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(lotId);
+    }
+
+    @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("Lot{");
         sb.append("lotId='").append(lotId).append('\'');
+        sb.append(", tender=").append(tender.getTenderId());
+        sb.append(", items=").append(items);
+        sb.append(", features=").append(features);
+        sb.append(", documents=").append(documents);
         sb.append(", title='").append(title).append('\'');
         sb.append(", description='").append(description).append('\'');
         sb.append(", valueAmount=").append(valueAmount);

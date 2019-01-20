@@ -5,7 +5,7 @@ import org.rodrigez.model.dto.FeatureValueDTO;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "feature_value")
+@Table(name = "feature_value", schema = "prozorro")
 public class FeatureValue {
 
     @Id
@@ -26,9 +26,11 @@ public class FeatureValue {
     @Column(name = "description")
     private String description;
 
-
     public void setFeature(Feature feature) {
         this.feature = feature;
+    }
+
+    public FeatureValue() {
     }
 
     public FeatureValue(FeatureValueDTO dto) {

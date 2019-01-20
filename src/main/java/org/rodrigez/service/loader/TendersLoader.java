@@ -7,12 +7,8 @@ import okhttp3.Response;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
-import org.rodrigez.model.domain.ProcuringEntity;
 import org.rodrigez.model.domain.Tender;
 import org.rodrigez.model.dto.TenderDTO;
-import org.rodrigez.repository.ItemRepository;
-import org.rodrigez.repository.ProcuringEntityRepository;
-import org.rodrigez.repository.TenderRepository;
 import org.rodrigez.service.Loader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -25,11 +21,8 @@ import java.util.List;
 public class TendersLoader implements Loader {
 
     @Autowired
-    TenderRepository tenderRepository;
-    @Autowired
-    ProcuringEntityRepository procuringEntityRepository;
-    @Autowired
-    ItemRepository itemRepository;
+    TenderService tenderService;
+
 
     private static int count = 100; // for testing
     private static OkHttpClient client = new OkHttpClient();
@@ -42,7 +35,6 @@ public class TendersLoader implements Loader {
         loadPage(basicUrl);
         for(String tenderID : tenderIDs){
             String tenderUrl = basicUrl + "/" + tenderID;
-            System.out.println(tenderUrl);
             loadTender(tenderUrl);
         }
     }
@@ -82,9 +74,9 @@ public class TendersLoader implements Loader {
         }
     }
 
-    private void loadTender(String url){
+    public void loadTender(String url){
 
-
+        System.out.println(url);
 
         Request request = new Request.Builder()
                 .url(url)
@@ -97,9 +89,10 @@ public class TendersLoader implements Loader {
             JSONObject jsonData = (JSONObject) jsonObject.get("data");
             TenderDTO tenderDTO = gson.fromJson(jsonData.toJSONString(), TenderDTO.class);
             Tender tender = new Tender(tenderDTO);
-            //info(tenderDTO);
+            info(tenderDTO);
             info(tender);
-            //persistTender(tender);
+
+            tenderService.persist(tenderDTO);
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -108,20 +101,10 @@ public class TendersLoader implements Loader {
     }
 
     private void info(Tender tender) {
-        tender.getDocumentList().forEach(System.out::println);
-        //tender.getLotList().forEach(System.out::println);
-    }
 
-    private void persistTender(Tender tender){
-
-        ProcuringEntity procuringEntity = tender.getProcuringEntity();
-        procuringEntity = procuringEntityRepository.save(procuringEntity);
-        tender.setProcuringEntity(procuringEntity);
-
-        tenderRepository.save(tender);
-
-
-
+        tender.getDocuments().forEach(System.out::println);
+        tender.getLots().forEach(System.out::println);
+        //tender.getFeatures().forEach(System.out::println);
     }
 
     private void info(TenderDTO tenderDTO){
@@ -129,15 +112,15 @@ public class TendersLoader implements Loader {
         tenderDTO.getQuestionDTOList().forEach(System.out::println);
         tenderDTO.getFunderList().forEach(System.out::println);
         tenderDTO.getBidDTOList().forEach(System.out::println);
-        //tenderDTO.getLotDTOList().forEach(System.out::println);
+        tenderDTO.getLotDTOList().forEach(System.out::println);
         tenderDTO.getRevisionDTOList().forEach(System.out::println);
         tenderDTO.getAwardList().forEach(System.out::println);
-        //tenderDTO.getItemDTOList().forEach(System.out::println);
+        tenderDTO.getItemDTOList().forEach(System.out::println);
         tenderDTO.getContractDTOList().forEach(System.out::println);
         tenderDTO.getCancellationDTOList().forEach(System.out::println);
         tenderDTO.getComplaintDTOList().forEach(System.out::println);
         tenderDTO.getDocumentDTOList().forEach(System.out::println);
-        //tenderDTO.getFeatureDTOList().forEach(System.out::println);
+        tenderDTO.getFeatureDTOList().forEach(System.out::println);
     }
 
 }
