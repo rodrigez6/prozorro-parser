@@ -1,9 +1,6 @@
 package org.rodrigez.service.loader;
 
-import org.rodrigez.model.domain.Document;
-import org.rodrigez.model.domain.Item;
-import org.rodrigez.model.domain.Lot;
-import org.rodrigez.model.domain.Tender;
+import org.rodrigez.model.domain.*;
 import org.rodrigez.model.dto.DocumentDTO;
 import org.rodrigez.repository.DocumentRepository;
 import org.rodrigez.repository.ItemRepository;
@@ -40,6 +37,15 @@ public class DocumentService {
                 break;
             }
         }
+
+        documentRepository.save(document);
+    }
+
+    public void persist(Bid bid, DocumentDTO dto){
+
+        Document document = new Document(dto);
+        bid.getTender().addDocument(document);
+        bid.addDocument(document);
 
         documentRepository.save(document);
     }

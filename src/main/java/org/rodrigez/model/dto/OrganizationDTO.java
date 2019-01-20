@@ -21,6 +21,26 @@ public class OrganizationDTO {
     @SerializedName("contactPoint")
     private ContactPointDTO contactPointDTO;
 
+    public String getName() {
+        return name;
+    }
+
+    public IdentifierDTO getIdentifierDTO() {
+        return identifierDTO;
+    }
+
+    public List<IdentifierDTO> getIdentifierDTOList() {
+        return identifierDTOList;
+    }
+
+    public AddressDTO getAddressDTO() {
+        return addressDTO;
+    }
+
+    public ContactPointDTO getContactPointDTO() {
+        return contactPointDTO;
+    }
+
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("OrganizationDTO{");

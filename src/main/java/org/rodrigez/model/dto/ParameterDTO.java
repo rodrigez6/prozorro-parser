@@ -10,6 +10,14 @@ public class ParameterDTO {
     @SerializedName("value")
     private float value;
 
+    public String getCode() {
+        return code;
+    }
+
+    public float getValue() {
+        return value;
+    }
+
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("ParameterDTO{");

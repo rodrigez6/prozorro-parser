@@ -26,6 +26,10 @@ public class Document {
     @JoinColumn(name = "lot_id")
     private Lot lot;
 
+    @ManyToOne
+    @JoinColumn(name = "bid_id")
+    private Bid bid;
+
     @Column(name = "document_type")
     private String documentType;
 
@@ -57,6 +61,10 @@ public class Document {
 
     public void setLot(Lot lot) {
         this.lot = lot;
+    }
+
+    public void setBid(Bid bid) {
+        this.bid = bid;
     }
 
     public Document() {
@@ -105,6 +113,9 @@ public class Document {
         }
         if(lot!=null){
             sb.append(", lot=").append(lot.getLotId());
+        }
+        if(bid!=null){
+            sb.append(", bid=").append(bid.getBidId());
         }
         sb.append('}');
         return sb.toString();

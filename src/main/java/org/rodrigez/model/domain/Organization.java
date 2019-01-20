@@ -2,26 +2,32 @@ package org.rodrigez.model.domain;
 
 import org.rodrigez.model.dto.AddressDTO;
 import org.rodrigez.model.dto.ContactPointDTO;
-import org.rodrigez.model.dto.ProcuringEntityDTO;
+import org.rodrigez.model.dto.OrganizationDTO;
 
 import javax.persistence.*;
 import java.net.URI;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
-
-
-/**
- *  Organization conducting the tender.
- */
+import java.util.Set;
 
 @Entity
-@Table(name = "procuring_entity", schema = "prozorro")
-public class ProcuringEntity {
+@Table(name = "organization", schema = "prozorro")
+public class Organization {
 
     @Id
-    @Column(name = "procuring_entity_id")
-    private String procuringEntityId;
+    @Column(name = "organization_id")
+    private String organizationId;
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "bid_organization",
+            schema = "prozorro",
+            joinColumns = {@JoinColumn(name = "organization_id")},
+            inverseJoinColumns = {@JoinColumn(name = "bid_id")}
+    )
+    private Set<Bid> bids = new HashSet<>();
 
     @Column(name = "identifier_scheme")
     private String identifierScheme;
@@ -31,9 +37,6 @@ public class ProcuringEntity {
 
     @Column(name = "identifier_uri")
     private String identifierUri;
-
-    @OneToMany(mappedBy = "procuringEntity")
-    private List<Tender> tenderList = new ArrayList<>();
 
     @Column(name = "name")
     private String name;
@@ -68,76 +71,16 @@ public class ProcuringEntity {
     @Column(name = "contact_point_url")
     private String contactPointUrl;
 
-    @Column(name = "kind")
-    private String kind;
-
-    public String getProcuringEntityId() {
-        return procuringEntityId;
+    public void addBid(Bid bid){
+        bids.add(bid);
     }
 
-    public List<Tender> getTenderList() {
-        return tenderList;
+    public Organization() {
     }
 
-    public String getName() {
-        return name;
-    }
+    public Organization(OrganizationDTO dto){
 
-    public String getAddressStreetAddress() {
-        return addressStreetAddress;
-    }
-
-    public String getAddressLocality() {
-        return addressLocality;
-    }
-
-    public String getAddressRegion() {
-        return addressRegion;
-    }
-
-    public String getAddressPostalCode() {
-        return addressPostalCode;
-    }
-
-    public String getAddressCountryName() {
-        return addressCountryName;
-    }
-
-    public String getContactPointName() {
-        return contactPointName;
-    }
-
-    public String getContactPointEmail() {
-        return contactPointEmail;
-    }
-
-    public String getContactPointTelephone() {
-        return contactPointTelephone;
-    }
-
-    public String getContactPointFaxNumber() {
-        return contactPointFaxNumber;
-    }
-
-    public String getContactPointUrl() {
-        return contactPointUrl;
-    }
-
-    public String getKind() {
-        return kind;
-    }
-
-    public void addTender(Tender tender){
-        tender.setProcuringEntity(this);
-        tenderList.add(tender);
-    }
-
-    public ProcuringEntity() {
-    }
-
-    public ProcuringEntity(ProcuringEntityDTO dto) {
-
-        this.procuringEntityId = dto.getIdentifierDTO().getId();
+        this.organizationId = dto.getIdentifierDTO().getId();
         this.identifierLegalName = dto.getIdentifierDTO().getLegalName();
         this.identifierScheme = dto.getIdentifierDTO().getScheme();
 
@@ -169,18 +112,16 @@ public class ProcuringEntity {
                 this.contactPointUrl = contactPointUrl.toString();
             }
         }
-
-        this.kind = dto.getKind();
     }
 
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder("ProcuringEntity{");
-        sb.append("procuringEntityId='").append(procuringEntityId).append('\'');
+        final StringBuilder sb = new StringBuilder("Organization{");
+        sb.append("organizationId='").append(organizationId).append('\'');
+        sb.append(", bids=").append(bids);
         sb.append(", identifierScheme='").append(identifierScheme).append('\'');
         sb.append(", identifierLegalName='").append(identifierLegalName).append('\'');
         sb.append(", identifierUri='").append(identifierUri).append('\'');
-        sb.append(", tenderList=").append(tenderList);
         sb.append(", name='").append(name).append('\'');
         sb.append(", addressStreetAddress='").append(addressStreetAddress).append('\'');
         sb.append(", addressLocality='").append(addressLocality).append('\'');
@@ -192,7 +133,6 @@ public class ProcuringEntity {
         sb.append(", contactPointTelephone='").append(contactPointTelephone).append('\'');
         sb.append(", contactPointFaxNumber='").append(contactPointFaxNumber).append('\'');
         sb.append(", contactPointUrl='").append(contactPointUrl).append('\'');
-        sb.append(", kind='").append(kind).append('\'');
         sb.append('}');
         return sb.toString();
     }

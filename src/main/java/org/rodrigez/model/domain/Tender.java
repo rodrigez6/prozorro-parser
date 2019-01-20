@@ -39,8 +39,8 @@ public class Tender {
 //    @OneToMany(mappedBy = "tender", cascade = CascadeType.ALL)
 //    private List<Question> questionList = new ArrayList<>();
 //
-//    @OneToMany(mappedBy = "bids", cascade = CascadeType.ALL)
-//    private List<BidDTO> bidDTOList = new ArrayList<>();
+    @OneToMany(mappedBy = "tender", cascade = CascadeType.ALL)
+    private Set<Bid> bids = new HashSet<>();
 //
 //    @OneToMany(mappedBy = "awards", cascade = CascadeType.ALL)
 //    private List<AwardDTO> awardList = new ArrayList<>();
@@ -285,7 +285,25 @@ public class Tender {
         features.add(feature);
     }
 
+    public void addBid(Bid bid){
+        bid.setTender(this);
+        bids.add(bid);
+    }
+
     public Tender() {
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Tender tender = (Tender) o;
+        return tenderId.equals(tender.tenderId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(tenderId);
     }
 
     public Tender(TenderDTO dto) {
@@ -293,8 +311,6 @@ public class Tender {
         this.tenderId = dto.getTenderId();
         this.title = dto.getTitle();
         this.description = dto.getDescription();
-
-        this.procuringEntity = new ProcuringEntity(dto.getProcuringEntityDTO());
 
         ValueDTO value = dto.getValueDTO();
         if(value!=null){
@@ -362,7 +378,7 @@ public class Tender {
         sb.append(", documents=").append(documents);
         sb.append(", lots=").append(lots);
 //        sb.append(", questionList=").append(questionList);
-//        sb.append(", bidDTOList=").append(bidDTOList);
+        sb.append(", bids=").append(bids);
 //        sb.append(", awardList=").append(awardList);
 //        sb.append(", contractDTOList=").append(contractDTOList);
 //        sb.append(", complaintList=").append(complaintList);

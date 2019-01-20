@@ -37,6 +37,11 @@ public class Lot {
     @LazyCollection(LazyCollectionOption.FALSE)
     private Set<Document> documents = new HashSet<>();
 
+    @OneToMany(mappedBy = "lot", cascade = CascadeType.ALL)
+    @Fetch(FetchMode.SELECT)
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private Set<LotValue> lotValues = new HashSet<>();
+
     @Column(name = "title")
     private String title;
 
@@ -105,6 +110,11 @@ public class Lot {
     public void addFeature(Feature feature){
         feature.setLot(this);
         features.add(feature);
+    }
+
+    public void addLotValue(LotValue lotValue){
+        lotValue.setLot(this);
+        lotValues.add(lotValue);
     }
 
     public Lot() {

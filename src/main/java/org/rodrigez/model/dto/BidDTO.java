@@ -36,6 +36,42 @@ public class BidDTO {
     @SerializedName("participationUrl")
     private URL participationUrl;
 
+    public List<OrganizationDTO> getOrganizationDTOList() {
+        return organizationDTOList;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public ValueDTO getValueDTO() {
+        return valueDTO;
+    }
+
+    public List<DocumentDTO> getDocumentDTOList() {
+        return documentDTOList;
+    }
+
+    public List<ParameterDTO> getParameterDTOList() {
+        return parameterDTOList;
+    }
+
+    public List<LotValueDTO> getLotValueDTOList() {
+        return lotValueDTOList;
+    }
+
+    public URL getParticipationUrl() {
+        return participationUrl;
+    }
+
     @Override
     public String toString() {
         final StringBuffer sb = new StringBuffer("BidDTO{");

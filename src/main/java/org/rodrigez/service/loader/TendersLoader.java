@@ -90,7 +90,7 @@ public class TendersLoader implements Loader {
             TenderDTO tenderDTO = gson.fromJson(jsonData.toJSONString(), TenderDTO.class);
             Tender tender = new Tender(tenderDTO);
             info(tenderDTO);
-            info(tender);
+            //info(tender);
 
             tenderService.persist(tenderDTO);
 
@@ -112,15 +112,15 @@ public class TendersLoader implements Loader {
         tenderDTO.getQuestionDTOList().forEach(System.out::println);
         tenderDTO.getFunderList().forEach(System.out::println);
         tenderDTO.getBidDTOList().forEach(System.out::println);
-        tenderDTO.getLotDTOList().forEach(System.out::println);
+        //tenderDTO.getLotDTOList().forEach(System.out::println);
         tenderDTO.getRevisionDTOList().forEach(System.out::println);
         tenderDTO.getAwardList().forEach(System.out::println);
-        tenderDTO.getItemDTOList().forEach(System.out::println);
+        //tenderDTO.getItemDTOList().forEach(System.out::println);
         tenderDTO.getContractDTOList().forEach(System.out::println);
         tenderDTO.getCancellationDTOList().forEach(System.out::println);
         tenderDTO.getComplaintDTOList().forEach(System.out::println);
-        tenderDTO.getDocumentDTOList().forEach(System.out::println);
-        tenderDTO.getFeatureDTOList().forEach(System.out::println);
+        //tenderDTO.getDocumentDTOList().forEach(System.out::println);
+        //tenderDTO.getFeatureDTOList().forEach(System.out::println);
     }
 
 }

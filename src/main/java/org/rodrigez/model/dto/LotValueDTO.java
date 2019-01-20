@@ -19,6 +19,22 @@ public class LotValueDTO {
     @SerializedName("participationUrl")
     private URL participationUrl;
 
+    public ValueDTO getValueDTO() {
+        return valueDTO;
+    }
+
+    public String getRelatedLot() {
+        return relatedLot;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public URL getParticipationUrl() {
+        return participationUrl;
+    }
+
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("LotValueDTO{");
