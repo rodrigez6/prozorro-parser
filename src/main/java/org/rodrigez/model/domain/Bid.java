@@ -23,19 +23,19 @@ public class Bid {
     @JoinColumn(name = "tender_id")
     private Tender tender;
 
-    @ManyToMany(mappedBy = "bids")
+    @ManyToMany(mappedBy = "bids", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Organization> organizations = new HashSet<>();
 
-    @OneToMany(mappedBy = "bid", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "bid", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Document> documents = new HashSet<>();
 
-    @OneToMany(mappedBy = "bid", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "bid", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<BidParameter> bidParameters = new HashSet<>();
 
-    @OneToMany(mappedBy = "bid", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "bid", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<LotValue> lotValues = new HashSet<>();
 
-    @OneToMany(mappedBy = "bid", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "bid", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Award> awards = new HashSet<>();
 
     @Column(name = "date")

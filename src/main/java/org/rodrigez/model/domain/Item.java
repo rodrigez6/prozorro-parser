@@ -1,9 +1,5 @@
 package org.rodrigez.model.domain;
 
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
 import org.rodrigez.model.dto.*;
 
 import javax.persistence.*;
@@ -21,11 +17,16 @@ public class Item {
     @Column(name = "item_id")
     private String itemId;
 
-    @ManyToOne
-    @JoinColumn(name = "tender_id")
-    private Tender tender;
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "tender_item",
+            schema = "prozorro",
+            joinColumns = {@JoinColumn(name = "item_id")},
+            inverseJoinColumns = {@JoinColumn(name = "tender_id")}
+    )
+    private Set<Tender> tenders = new HashSet<>();
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = {CascadeType.PERSIST,CascadeType.REFRESH,CascadeType.REMOVE})
     @JoinColumn(name = "lot_id")
     private Lot lot;
 
@@ -37,19 +38,13 @@ public class Item {
     @JoinColumn(name = "award_id")
     private Award award;
 
-    @OneToMany(mappedBy = "item", cascade = CascadeType.ALL)
-    @Fetch(FetchMode.SELECT)
-    @LazyCollection(LazyCollectionOption.FALSE)
+    @OneToMany(mappedBy = "item", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Document> documents = new HashSet<>();
 
-    @OneToMany(mappedBy = "item", cascade = CascadeType.ALL)
-    @Fetch(FetchMode.SELECT)
-    @LazyCollection(LazyCollectionOption.FALSE)
+    @OneToMany(mappedBy = "item", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Feature> features = new HashSet<>();
 
-    @OneToMany(mappedBy = "item", cascade = CascadeType.ALL)
-    @Fetch(FetchMode.SELECT)
-    @LazyCollection(LazyCollectionOption.FALSE)
+    @OneToMany(mappedBy = "item", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Question> questions = new HashSet<>();
 
     @Column(name = "description")
@@ -110,10 +105,6 @@ public class Item {
         this.lot = lot;
     }
 
-    public void setTender(Tender tender) {
-        this.tender = tender;
-    }
-
     public String getItemId() {
         return itemId;
     }
@@ -139,6 +130,11 @@ public class Item {
     public void addQuestion(Question question){
         question.setItem(this);
         questions.add(question);
+    }
+
+    public void addTender(Tender tender){
+        tender.addItem(this);
+        tenders.add(tender);
     }
 
     public Item() {
@@ -210,9 +206,6 @@ public class Item {
     public String toString() {
         final StringBuilder sb = new StringBuilder("Item{");
         sb.append("itemId='").append(itemId).append('\'');
-        if(tender!=null){
-            sb.append(", tender=").append(tender.getTenderId());
-        }
         sb.append(", lot=").append(lot.getLotId());
         sb.append(", documents=").append(documents);
         sb.append(", features=").append(features);

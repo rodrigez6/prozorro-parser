@@ -22,7 +22,7 @@ public class Document {
     @JoinColumn(name = "item_id")
     private Item item;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "lot_id")
     private Lot lot;
 

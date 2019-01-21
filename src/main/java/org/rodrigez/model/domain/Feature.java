@@ -5,9 +5,9 @@ import org.rodrigez.model.dto.FeatureValueDTO;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "feature" , schema = "prozorro")
@@ -29,16 +29,14 @@ public class Feature implements Serializable {
     @JoinColumn(name = "item_id")
     private Item item;
 
-    @OneToMany(mappedBy = "feature", cascade = CascadeType.ALL)
-    private List<FeatureValue> featureValueList = new ArrayList<>();
+    @OneToMany(mappedBy = "feature", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Set<FeatureValue> featureValues = new HashSet<>();
 
     @Column(name = "title")
     private String title;
 
     @Column(name = "description")
     private String description;
-
-
 
     public void setTender(Tender tender) {
         this.tender = tender;
@@ -67,7 +65,7 @@ public class Feature implements Serializable {
         for(FeatureValueDTO featureValueDTO:dto.getValuesList()){
             FeatureValue featureValue = new FeatureValue(featureValueDTO);
             featureValue.setFeature(this);
-            featureValueList.add(featureValue);
+            featureValues.add(featureValue);
         }
     }
 
@@ -93,7 +91,7 @@ public class Feature implements Serializable {
         sb.append(", item=").append(item.getItemId());
         sb.append(", title='").append(title).append('\'');
         sb.append(", description='").append(description).append('\'');
-        sb.append(", featureValueList=").append(featureValueList);
+        sb.append(", featureValues=").append(featureValues);
         sb.append('}');
         return sb.toString();
     }

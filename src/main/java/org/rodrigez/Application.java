@@ -15,7 +15,14 @@ public class Application {
         SpringApplicationBuilder app = new SpringApplicationBuilder(Application.class).web(WebApplicationType.NONE);
         ApplicationContext context = app.run(args);
         TendersLoader tendersLoader = context.getBean(TendersLoader.class);
-        tendersLoader.run();
+        //tendersLoader.run();
+
+        tendersLoader.loadTender("https://public.api.openprocurement.org/api/2.4/tenders/f3574c5edd5441e4bac33ebf2f937ac3");
+        // items problem
+//        tendersLoader.loadTender("https://public.api.openprocurement.org/api/2.4/tenders/b5690b7f09734b988146d142ed48131d");
+  //      tendersLoader.loadTender("https://public.api.openprocurement.org/api/2.4/tenders/224046c451b44af08eefc1a8248ed648");
+//
+//        tendersLoader.loadTender("https://public.api.openprocurement.org/api/2.4/tenders/cebaac15ca634a60bbedcb9df1755133");
 //        tendersLoader.loadTender("https://public.api.openprocurement.org/api/2.4/tenders/cebaac15ca634a60bbedcb9df1755133");
 //        tendersLoader.loadTender("https://public.api.openprocurement.org/api/2.4/tenders/861df97255e0420f8406d57da257bc99");
 //        tendersLoader.loadTender("https://public.api.openprocurement.org/api/2.4/tenders/6f11c1e203eb40f9b794fbe9772a52c9");

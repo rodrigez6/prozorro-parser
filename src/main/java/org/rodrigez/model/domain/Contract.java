@@ -25,13 +25,13 @@ public class Contract {
     @OneToOne(mappedBy = "contract", cascade = CascadeType.ALL)
     private Award award;
 
-    @OneToMany(mappedBy = "contract", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "contract", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Document> documents = new HashSet<>();
 
-    @OneToMany(mappedBy = "contract", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "contract", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Item> items = new HashSet<>();
 
-    @ManyToMany(mappedBy = "contracts", cascade = CascadeType.ALL)
+    @ManyToMany(mappedBy = "contracts", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Organization> suppliers = new HashSet<>();
 
     @Column(name = "contract_number")

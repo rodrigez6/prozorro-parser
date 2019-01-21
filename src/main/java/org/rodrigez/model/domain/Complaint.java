@@ -32,7 +32,7 @@ public class Complaint {
     @JoinColumn(name = "award_id")
     private Award award;
 
-    @OneToMany(mappedBy = "complaint")
+    @OneToMany(mappedBy = "complaint", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Document> documents = new HashSet<>();
 
     @Column(name = "title")

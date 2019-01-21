@@ -1,10 +1,16 @@
 package org.rodrigez.model.domain;
 
-import org.rodrigez.model.dto.*;
+import org.rodrigez.model.dto.GuaranteeDTO;
+import org.rodrigez.model.dto.PeriodDTO;
+import org.rodrigez.model.dto.TenderDTO;
+import org.rodrigez.model.dto.ValueDTO;
 
 import javax.persistence.*;
 import java.net.URL;
-import java.util.*;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "tender", schema = "prozorro")
@@ -20,41 +26,41 @@ public class Tender {
     @Column(name = "description")
     private String description;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "procuring_entity_id", referencedColumnName = "procuring_entity_id")
+    @ManyToOne
+    @JoinColumn(name = "procuring_entity_id")
     private ProcuringEntity procuringEntity;
 
-    @OneToMany(mappedBy = "tender", cascade = CascadeType.ALL)
+    @ManyToMany(mappedBy = "tenders", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Item> items = new HashSet<>();
 
-    @OneToMany(mappedBy = "tender", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "tender", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Feature> features = new HashSet<>();
 
-    @OneToMany(mappedBy = "tender", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "tender", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Document> documents = new HashSet<>();
 
-    @OneToMany(mappedBy = "tender", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "tender", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Lot> lots = new HashSet<>();
 
-    @OneToMany(mappedBy = "tender", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "tender", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Question> questions = new HashSet<>();
 
-    @OneToMany(mappedBy = "tender", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "tender", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Bid> bids = new HashSet<>();
 
-    @OneToMany(mappedBy = "tender", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "tender", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Award> awards = new HashSet<>();
 
-    @OneToMany(mappedBy = "tender", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "tender", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Contract> contracts = new HashSet<>();
 
-    @OneToMany(mappedBy = "tender", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "tender", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Complaint> complaints = new HashSet<>();
 
-    @ManyToMany(mappedBy = "fundersTenders", cascade = CascadeType.ALL)
+    @ManyToMany(mappedBy = "fundersTenders", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Organization> funders = new HashSet<>();
 
-    @OneToMany(mappedBy = "tender", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "tender", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Revision> revisions = new HashSet<>();
 
     @Column(name = "value_amount")
@@ -253,7 +259,6 @@ public class Tender {
     }
 
     public void addItem(Item item){
-        item.setTender(this);
         items.add(item);
     }
 
@@ -364,8 +369,7 @@ public class Tender {
         sb.append("tenderId='").append(tenderId).append('\'');
         sb.append(", title='").append(title).append('\'');
         sb.append(", description='").append(description).append('\'');
-        sb.append(", procuringEntity=").append(procuringEntity);
-        sb.append(", items=").append(items);
+        sb.append(", procuringEntity=").append(procuringEntity.getProcuringEntityId());
         sb.append(", features=").append(features);
         sb.append(", documents=").append(documents);
         sb.append(", lots=").append(lots);

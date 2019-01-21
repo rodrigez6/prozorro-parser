@@ -7,9 +7,9 @@ import org.rodrigez.model.dto.ProcuringEntityDTO;
 import javax.persistence.*;
 import java.net.URI;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 
 /**
@@ -33,8 +33,8 @@ public class ProcuringEntity {
     @Column(name = "identifier_uri")
     private String identifierUri;
 
-    @OneToMany(mappedBy = "procuringEntity")
-    private List<Tender> tenderList = new ArrayList<>();
+    @OneToMany(mappedBy = "procuringEntity", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private Set<Tender> tenders = new HashSet<>();
 
     @Column(name = "name")
     private String name;
@@ -72,13 +72,17 @@ public class ProcuringEntity {
     @Column(name = "kind")
     private String kind;
 
+    public String getProcuringEntityId() {
+        return procuringEntityId;
+    }
+
     public String getName() {
         return name;
     }
 
     public void addTender(Tender tender){
         tender.setProcuringEntity(this);
-        tenderList.add(tender);
+        tenders.add(tender);
     }
 
     @Override
@@ -142,7 +146,7 @@ public class ProcuringEntity {
         sb.append(", identifierScheme='").append(identifierScheme).append('\'');
         sb.append(", identifierLegalName='").append(identifierLegalName).append('\'');
         sb.append(", identifierUri='").append(identifierUri).append('\'');
-        sb.append(", tenderList=").append(tenderList);
+        sb.append(", tenders=").append(tenders);
         sb.append(", name='").append(name).append('\'');
         sb.append(", addressStreetAddress='").append(addressStreetAddress).append('\'');
         sb.append(", addressLocality='").append(addressLocality).append('\'');

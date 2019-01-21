@@ -16,7 +16,7 @@ public class Cancellation {
     @Column(name = "cancellation_id")
     private String cancellationId;
 
-    @OneToMany(mappedBy = "cancellation")
+    @OneToMany(mappedBy = "cancellation", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Document> documents = new HashSet<>();
 
     @ManyToOne

@@ -18,9 +18,15 @@ public class ItemService {
 
     public void persist(Tender tender, ItemDTO dto){
 
-        Item item = new Item(dto);
-        String relatedLotId = dto.getRelatedLot();
+        Item item;
 
+        String itemId = dto.getId();
+        Optional<Item> itemOptional = itemRepository.findById(itemId);
+        item = itemOptional.orElseGet(() -> new Item(dto));
+
+        item.addTender(tender);
+
+        String relatedLotId = dto.getRelatedLot();
         if(relatedLotId!=null){
             Optional<Lot> lot = lotRepository.findById(dto.getRelatedLot());
             lot.ifPresent(lot1 -> lot1.addItem(item));
@@ -31,14 +37,27 @@ public class ItemService {
 
     public void persist(Contract contract, ItemDTO dto){
 
-        Item item = new Item(dto);
+        Item item;
+
+        String itemId = dto.getId();
+        Optional<Item> itemOptional = itemRepository.findById(itemId);
+        item = itemOptional.orElseGet(() -> new Item(dto));
+
+        item.addTender(contract.getTender());
         contract.addItem(item);
 
         itemRepository.save(item);
     }
 
     public void persist(Award award, ItemDTO dto) {
-        Item item = new Item(dto);
+
+        Item item;
+
+        String itemId = dto.getId();
+        Optional<Item> itemOptional = itemRepository.findById(itemId);
+        item = itemOptional.orElseGet(() -> new Item(dto));
+
+        item.addTender(award.getTender());
         award.addItem(item);
 
         itemRepository.save(item);

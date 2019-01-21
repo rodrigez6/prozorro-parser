@@ -36,16 +36,16 @@ public class Award {
     @JoinColumn(name = "contract_id")
     private Contract contract;
 
-    @ManyToMany(mappedBy = "awards", cascade = CascadeType.ALL)
+    @ManyToMany(mappedBy = "awards", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Organization> organizations = new HashSet<>();
 
-    @OneToMany(mappedBy = "award")
+    @OneToMany(mappedBy = "award",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Item> items = new HashSet<>();
 
-    @OneToMany(mappedBy = "award", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "award", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Document> documents = new HashSet<>();
 
-    @OneToMany(mappedBy = "award", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "award", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Complaint> complaints = new HashSet<>();
 
     @Column(name = "title")

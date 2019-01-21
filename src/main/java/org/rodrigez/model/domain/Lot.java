@@ -1,9 +1,5 @@
 package org.rodrigez.model.domain;
 
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
 import org.rodrigez.model.dto.GuaranteeDTO;
 import org.rodrigez.model.dto.LotDTO;
 import org.rodrigez.model.dto.PeriodDTO;
@@ -11,7 +7,10 @@ import org.rodrigez.model.dto.ValueDTO;
 
 import javax.persistence.*;
 import java.net.URL;
-import java.util.*;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "lot", schema = "prozorro")
@@ -29,34 +28,22 @@ public class Lot {
     @JoinColumn(name = "award_id")
     private Award award;
 
-    @OneToMany(mappedBy = "lot", cascade = CascadeType.ALL)
-    @Fetch(FetchMode.SELECT)
-    @LazyCollection(LazyCollectionOption.FALSE)
+    @OneToMany(mappedBy = "lot", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Item> items = new HashSet<>();
 
-    @OneToMany(mappedBy = "lot", cascade = CascadeType.ALL)
-    @Fetch(FetchMode.SELECT)
-    @LazyCollection(LazyCollectionOption.FALSE)
+    @OneToMany(mappedBy = "lot", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Feature> features = new HashSet<>();
 
-    @OneToMany(mappedBy = "lot", cascade = CascadeType.ALL)
-    @Fetch(FetchMode.SELECT)
-    @LazyCollection(LazyCollectionOption.FALSE)
+    @OneToMany(mappedBy = "lot", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Document> documents = new HashSet<>();
 
-    @OneToMany(mappedBy = "lot", cascade = CascadeType.ALL)
-    @Fetch(FetchMode.SELECT)
-    @LazyCollection(LazyCollectionOption.FALSE)
+    @OneToMany(mappedBy = "lot", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<LotValue> lotValues = new HashSet<>();
 
-    @OneToMany(mappedBy = "lot", cascade = CascadeType.ALL)
-    @Fetch(FetchMode.SELECT)
-    @LazyCollection(LazyCollectionOption.FALSE)
+    @OneToMany(mappedBy = "lot", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Complaint> complaints = new HashSet<>();
 
-    @OneToMany(mappedBy = "lot", cascade = CascadeType.ALL)
-    @Fetch(FetchMode.SELECT)
-    @LazyCollection(LazyCollectionOption.FALSE)
+    @OneToMany(mappedBy = "lot", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Question> questions = new HashSet<>();
 
     @Column(name = "title")
@@ -103,9 +90,6 @@ public class Lot {
 
     @Column(name = "status")
     private String status;
-
-    @OneToMany(mappedBy = "lot")
-    private List<Document> documentList = new ArrayList<>();
 
     public String getLotId() {
         return lotId;
@@ -229,7 +213,6 @@ public class Lot {
         sb.append(", auctionPeriodEndDate=").append(auctionPeriodEndDate);
         sb.append(", auctionUrl='").append(auctionUrl).append('\'');
         sb.append(", status='").append(status).append('\'');
-        sb.append(", documentList=").append(documentList);
         sb.append('}');
         return sb.toString();
     }

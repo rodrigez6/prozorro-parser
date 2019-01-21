@@ -24,7 +24,7 @@ public class Revision {
     @Column(name = "date")
     private Date date;
 
-    @OneToMany(mappedBy = "revision" ,cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "revision" ,cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<RevisionChange> revisionChanges = new HashSet<>();
 
     public void setTender(Tender tender) {
