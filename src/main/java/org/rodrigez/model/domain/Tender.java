@@ -369,7 +369,9 @@ public class Tender {
         sb.append("tenderId='").append(tenderId).append('\'');
         sb.append(", title='").append(title).append('\'');
         sb.append(", description='").append(description).append('\'');
-        sb.append(", procuringEntity=").append(procuringEntity.getProcuringEntityId());
+        if(procuringEntity!=null){
+            sb.append(", procuringEntity=").append(procuringEntity.getProcuringEntityId());
+        }
         sb.append(", features=").append(features);
         sb.append(", documents=").append(documents);
         sb.append(", lots=").append(lots);

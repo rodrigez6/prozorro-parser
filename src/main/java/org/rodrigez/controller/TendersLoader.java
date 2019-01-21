@@ -32,10 +32,7 @@ public class TendersLoader{
     public void run() {
         String basicUrl = "https://public.api.openprocurement.org/api/2.4/tenders";
         loadPage(basicUrl);
-        for(String tenderID : tenderIDs){
-            String tenderUrl = basicUrl + "/" + tenderID;
-            loadTender(tenderUrl);
-        }
+        tenderIDs.parallelStream().forEach(tenderId -> loadTender(basicUrl + "/" + tenderId));
     }
 
     private void loadPage(String url){
@@ -88,8 +85,9 @@ public class TendersLoader{
             JSONObject jsonData = (JSONObject) jsonObject.get("data");
             TenderDTO tenderDTO = gson.fromJson(jsonData.toJSONString(), TenderDTO.class);
             Tender tender = new Tender(tenderDTO);
-            info(tenderDTO);
-            info(tender);
+            System.out.println(tenderDTO.getTenderId());
+            //info(tenderDTO);
+            //info(tender);
 
             tenderService.persist(tenderDTO);
 

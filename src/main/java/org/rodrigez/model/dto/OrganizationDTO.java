@@ -2,6 +2,7 @@ package org.rodrigez.model.dto;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class OrganizationDTO {
@@ -13,7 +14,7 @@ public class OrganizationDTO {
     private IdentifierDTO identifierDTO;
 
     @SerializedName("additionalIdentifiers")
-    private List<IdentifierDTO> identifierDTOList;
+    private List<IdentifierDTO> identifierDTOList = new ArrayList<>();
 
     @SerializedName("address")
     private AddressDTO addressDTO;

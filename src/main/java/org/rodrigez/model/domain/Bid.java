@@ -135,7 +135,7 @@ public class Bid {
     public String toString() {
         final StringBuilder sb = new StringBuilder("Bid{");
         sb.append("bidId='").append(bidId).append('\'');
-        sb.append(", tender=").append(tender);
+        sb.append(", tender=").append(tender.getTenderId());
         sb.append(", organizations=").append(organizations);
         sb.append(", documents=").append(documents);
         sb.append(", bidParameters=").append(bidParameters);

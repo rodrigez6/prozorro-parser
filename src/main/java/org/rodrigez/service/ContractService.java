@@ -27,7 +27,8 @@ public class ContractService {
 
     public void persist(Tender tender, ContractDTO dto){
 
-        Contract contract = new Contract(dto);
+        Contract contract = findOrCreate(dto);
+
         contract.setTender(tender);
 
         String awardId = dto.getAwardId();
@@ -42,9 +43,19 @@ public class ContractService {
 
         dto.getDocumentDTOList().forEach(document -> documentService.persist(contract, document));
 
+        dto.getSupplierList().forEach(supplier -> organizationService.persist(contract, supplier));
+
         dto.getItemDTOList().forEach(item -> itemService.persist(contract, item));
-
-        dto.getSupplierList().forEach(supplier -> organizationService.persist(contract , supplier));
-
     }
+
+    public Contract findOrCreate(ContractDTO dto){
+        String id = dto.getContractId();
+        if(id!=null){
+            Optional<Contract> contractOptional = contractRepository.findById(id);
+            return contractOptional.orElseGet(() -> new Contract(dto));
+        }
+        return new Contract(dto);
+    }
+
+
 }

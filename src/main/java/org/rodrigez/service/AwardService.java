@@ -33,7 +33,8 @@ public class AwardService {
 
     public void persist(Tender tender, AwardDTO dto){
 
-        Award award = new Award(dto);
+        Award award = findOrCreate(dto);
+
         award.setTender(tender);
 
         String bidId = dto.getBidId();
@@ -59,5 +60,11 @@ public class AwardService {
         dto.getDocumentDTOList().forEach(document -> documentService.persist(award , document));
 
         dto.getItemDTOList().forEach(item -> itemService.persist(award, item));
+    }
+
+    public Award findOrCreate(AwardDTO dto){
+        String id = dto.getId();
+        Optional<Award> awardOptional = awardRepository.findById(id);
+        return awardOptional.orElseGet(() -> new Award(dto));
     }
 }

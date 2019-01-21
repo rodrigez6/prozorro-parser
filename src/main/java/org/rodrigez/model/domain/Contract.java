@@ -22,7 +22,8 @@ public class Contract {
     @JoinColumn(name = "tender_id")
     private Tender tender;
 
-    @OneToOne(mappedBy = "contract", cascade = CascadeType.ALL)
+    @OneToOne
+    @JoinColumn(name = "award_id")
     private Award award;
 
     @OneToMany(mappedBy = "contract", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -31,7 +32,7 @@ public class Contract {
     @OneToMany(mappedBy = "contract", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Item> items = new HashSet<>();
 
-    @ManyToMany(mappedBy = "contracts", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToMany(mappedBy = "contracts", fetch = FetchType.EAGER)
     private Set<Organization> suppliers = new HashSet<>();
 
     @Column(name = "contract_number")
@@ -139,8 +140,12 @@ public class Contract {
     public String toString() {
         final StringBuilder sb = new StringBuilder("Contract{");
         sb.append("contractId='").append(contractId).append('\'');
-        sb.append(", tender=").append(tender);
-        sb.append(", award=").append(award);
+        if(tender!=null){
+            sb.append(", tender=").append(tender.getTenderId());
+        }
+        if(award!=null){
+            sb.append(", award=").append(award);
+        }
         sb.append(", documents=").append(documents);
         sb.append(", items=").append(items);
         sb.append(", suppliers=").append(suppliers);

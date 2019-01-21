@@ -30,7 +30,7 @@ public class Item {
     @JoinColumn(name = "lot_id")
     private Lot lot;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "contract_id")
     private Contract contract;
 
@@ -206,7 +206,9 @@ public class Item {
     public String toString() {
         final StringBuilder sb = new StringBuilder("Item{");
         sb.append("itemId='").append(itemId).append('\'');
-        sb.append(", lot=").append(lot.getLotId());
+        if (lot!=null){
+            sb.append(", lot=").append(lot.getLotId());
+        }
         sb.append(", documents=").append(documents);
         sb.append(", features=").append(features);
         sb.append(", description='").append(description).append('\'');

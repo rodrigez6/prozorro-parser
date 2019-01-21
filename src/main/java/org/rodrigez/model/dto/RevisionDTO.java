@@ -2,6 +2,7 @@ package org.rodrigez.model.dto;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -11,7 +12,7 @@ public class RevisionDTO {
     private Date date;
 
     @SerializedName("changes")
-    private List<String> changeList;
+    private List<String> changeList = new ArrayList<>();
 
     public Date getDate() {
         return date;

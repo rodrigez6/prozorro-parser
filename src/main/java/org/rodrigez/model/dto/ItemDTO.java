@@ -2,6 +2,7 @@ package org.rodrigez.model.dto;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ItemDTO {
@@ -16,7 +17,7 @@ public class ItemDTO {
     private ClassificationDTO classificationDTO;
 
     @SerializedName("additionalClassifications")
-    private List<ClassificationDTO> additionalClassificationDTOList;
+    private List<ClassificationDTO> additionalClassificationDTOList = new ArrayList<>();
 
     @SerializedName("unit")
     private UnitDTO unitDTO;

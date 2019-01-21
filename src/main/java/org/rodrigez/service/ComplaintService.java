@@ -22,6 +22,7 @@ public class ComplaintService {
     DocumentService documentService;
 
     public void persist(Tender tender, ComplaintDTO dto){
+
         Complaint complaint = new Complaint(dto);
         complaint.setTender(tender);
 
@@ -39,6 +40,7 @@ public class ComplaintService {
     }
 
     public void persist(Award award, ComplaintDTO dto){
+
         Complaint complaint = new Complaint(dto);
         complaint.setTender(award.getTender());
         complaint.setLot(award.getLot());

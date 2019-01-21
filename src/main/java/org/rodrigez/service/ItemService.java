@@ -18,11 +18,7 @@ public class ItemService {
 
     public void persist(Tender tender, ItemDTO dto){
 
-        Item item;
-
-        String itemId = dto.getId();
-        Optional<Item> itemOptional = itemRepository.findById(itemId);
-        item = itemOptional.orElseGet(() -> new Item(dto));
+        Item item = findOrCreate(dto);
 
         item.addTender(tender);
 
@@ -37,11 +33,7 @@ public class ItemService {
 
     public void persist(Contract contract, ItemDTO dto){
 
-        Item item;
-
-        String itemId = dto.getId();
-        Optional<Item> itemOptional = itemRepository.findById(itemId);
-        item = itemOptional.orElseGet(() -> new Item(dto));
+        Item item = findOrCreate(dto);
 
         item.addTender(contract.getTender());
         contract.addItem(item);
@@ -51,15 +43,17 @@ public class ItemService {
 
     public void persist(Award award, ItemDTO dto) {
 
-        Item item;
-
-        String itemId = dto.getId();
-        Optional<Item> itemOptional = itemRepository.findById(itemId);
-        item = itemOptional.orElseGet(() -> new Item(dto));
+        Item item = findOrCreate(dto);
 
         item.addTender(award.getTender());
         award.addItem(item);
 
         itemRepository.save(item);
+    }
+
+    public Item findOrCreate(ItemDTO dto){
+        String itemId = dto.getId();
+        Optional<Item> itemOptional = itemRepository.findById(itemId);
+        return itemOptional.orElseGet(() -> new Item(dto));
     }
 }

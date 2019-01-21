@@ -19,7 +19,7 @@ public class Organization {
     @Column(name = "organization_id")
     private String organizationId;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     @JoinTable(
             name = "bid_organization",
             schema = "prozorro",
@@ -28,13 +28,13 @@ public class Organization {
     )
     private Set<Bid> bids = new HashSet<>();
 
-    @OneToMany(mappedBy = "author")
+    @OneToMany(mappedBy = "author",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Complaint> complaints = new HashSet<>();
 
-    @OneToMany(mappedBy = "organization")
+    @OneToMany(mappedBy = "organization", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Question> questions = new HashSet<>();
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(
             name = "tender_organization_funders",
             schema = "prozorro",
@@ -43,7 +43,7 @@ public class Organization {
     )
     private Set<Tender> fundersTenders = new HashSet<>();
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "contract_organization_suppliers",
             schema = "prozorro",
@@ -52,7 +52,7 @@ public class Organization {
     )
     private Set<Contract> contracts = new HashSet<>();
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(
             name = "award_organization",
             schema = "prozorro",
@@ -186,7 +186,6 @@ public class Organization {
     public String toString() {
         final StringBuilder sb = new StringBuilder("Organization{");
         sb.append("organizationId='").append(organizationId).append('\'');
-        sb.append(", bids=").append(bids);
         sb.append(", identifierScheme='").append(identifierScheme).append('\'');
         sb.append(", identifierLegalName='").append(identifierLegalName).append('\'');
         sb.append(", identifierUri='").append(identifierUri).append('\'');

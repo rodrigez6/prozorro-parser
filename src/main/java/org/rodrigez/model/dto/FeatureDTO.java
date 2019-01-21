@@ -2,6 +2,7 @@ package org.rodrigez.model.dto;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class FeatureDTO {
@@ -22,7 +23,7 @@ public class FeatureDTO {
     private String description;
 
     @SerializedName("enum")
-    private List<FeatureValueDTO> valuesList;
+    private List<FeatureValueDTO> valuesList  = new ArrayList<>();
 
     public String getCode() {
         return code;

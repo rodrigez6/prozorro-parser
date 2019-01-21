@@ -16,14 +16,12 @@ public class ProcuringEntityService {
 
     public void persist(Tender tender, ProcuringEntityDTO dto){
 
-        ProcuringEntity procuringEntity;
-
         String id = dto.getIdentifierDTO().getId();
         Optional<ProcuringEntity> procuringEntityOptional = procuringEntityRepository.findById(id);
-        procuringEntity = procuringEntityOptional.orElseGet(() -> new ProcuringEntity(dto));
+        ProcuringEntity procuringEntity = procuringEntityOptional.orElseGet(() -> new ProcuringEntity(dto));
 
         procuringEntity.addTender(tender);
-        procuringEntityRepository.save(procuringEntity);
 
+        procuringEntityRepository.save(procuringEntity);
     }
 }

@@ -32,8 +32,7 @@ public class Award {
     @JoinColumn(name = "bid_id")
     private Bid bid;
 
-    @OneToOne
-    @JoinColumn(name = "contract_id")
+    @OneToOne(mappedBy = "award", cascade = CascadeType.ALL)
     private Contract contract;
 
     @ManyToMany(mappedBy = "awards", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -160,9 +159,15 @@ public class Award {
     public String toString() {
         final StringBuilder sb = new StringBuilder("Award{");
         sb.append("awardId='").append(awardId).append('\'');
-        sb.append(", tender=").append(tender);
-        sb.append(", lot=").append(lot);
-        sb.append(", bid=").append(bid);
+        if(tender!=null){
+            sb.append(", tender=").append(tender.getTenderId());
+        }
+        if(lot!=null){
+            sb.append(", lot=").append(lot.getLotId());
+        }
+        if(bid!=null){
+            sb.append(", bid=").append(bid.getBidId());
+        }
         sb.append(", organizations=").append(organizations);
         sb.append(", items=").append(items);
         sb.append(", documents=").append(documents);

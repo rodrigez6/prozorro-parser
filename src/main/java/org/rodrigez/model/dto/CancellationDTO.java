@@ -2,6 +2,7 @@ package org.rodrigez.model.dto;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -17,7 +18,7 @@ public class CancellationDTO {
     private String status;
 
     @SerializedName("documents")
-    private List<DocumentDTO> documentDTOList;
+    private List<DocumentDTO> documentDTOList = new ArrayList<>();
 
     @SerializedName("date")
     private Date date;
