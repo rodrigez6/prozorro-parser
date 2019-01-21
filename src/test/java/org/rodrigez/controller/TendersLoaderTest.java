@@ -3,7 +3,6 @@ package org.rodrigez.controller;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.rodrigez.TendersLoader;
 import org.rodrigez.model.domain.Tender;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

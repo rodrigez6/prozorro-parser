@@ -1,4 +1,4 @@
-package org.rodrigez;
+package org.rodrigez.controller;
 
 import com.google.gson.Gson;
 import okhttp3.OkHttpClient;
