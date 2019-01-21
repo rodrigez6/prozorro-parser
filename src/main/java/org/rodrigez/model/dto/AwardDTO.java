@@ -46,6 +46,58 @@ public class AwardDTO {
     @SerializedName("lotId")
     private String lotId;
 
+    public String getId() {
+        return id;
+    }
+
+    public String getBidId() {
+        return bidId;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public ValueDTO getValueDTO() {
+        return valueDTO;
+    }
+
+    public List<OrganizationDTO> getSupplierList() {
+        return supplierList;
+    }
+
+    public List<ItemDTO> getItemDTOList() {
+        return itemDTOList;
+    }
+
+    public List<DocumentDTO> getDocumentDTOList() {
+        return documentDTOList;
+    }
+
+    public List<ComplaintDTO> getComplaintDTOList() {
+        return complaintDTOList;
+    }
+
+    public PeriodDTO getComplaintPeriodDTO() {
+        return complaintPeriodDTO;
+    }
+
+    public String getLotId() {
+        return lotId;
+    }
+
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("AwardDTO{");

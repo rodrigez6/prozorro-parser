@@ -13,6 +13,14 @@ public class RevisionDTO {
     @SerializedName("changes")
     private List<String> changeList;
 
+    public Date getDate() {
+        return date;
+    }
+
+    public List<String> getChangeList() {
+        return changeList;
+    }
+
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("RevisionDTO{");

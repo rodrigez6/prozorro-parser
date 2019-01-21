@@ -51,6 +51,58 @@ public class ContractDTO implements Serializable {
     @SerializedName("documents")
     private List<DocumentDTO> documentDTOList = new ArrayList<>();
 
+    public String getId() {
+        return id;
+    }
+
+    public String getAwardId() {
+        return awardId;
+    }
+
+    public String getContractId() {
+        return contractId;
+    }
+
+    public String getContractNumber() {
+        return contractNumber;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public ValueDTO getValueDTO() {
+        return valueDTO;
+    }
+
+    public List<ItemDTO> getItemDTOList() {
+        return itemDTOList;
+    }
+
+    public List<OrganizationDTO> getSupplierList() {
+        return supplierList;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public PeriodDTO getPeriodDTO() {
+        return periodDTO;
+    }
+
+    public Date getDateSigned() {
+        return dateSigned;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
     public List<DocumentDTO> getDocumentDTOList() {
         return documentDTOList;
     }

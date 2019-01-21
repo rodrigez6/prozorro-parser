@@ -92,7 +92,7 @@ public class TendersLoader implements Loader {
             info(tenderDTO);
             //info(tender);
 
-            tenderService.persist(tenderDTO);
+            //tenderService.persist(tenderDTO);
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -111,7 +111,7 @@ public class TendersLoader implements Loader {
         //System.out.println(tenderDTO.getTenderId());
         tenderDTO.getQuestionDTOList().forEach(System.out::println);
         tenderDTO.getFunderList().forEach(System.out::println);
-        tenderDTO.getBidDTOList().forEach(System.out::println);
+        //tenderDTO.getBidDTOList().forEach(System.out::println);
         //tenderDTO.getLotDTOList().forEach(System.out::println);
         tenderDTO.getRevisionDTOList().forEach(System.out::println);
         tenderDTO.getAwardList().forEach(System.out::println);

@@ -30,6 +30,22 @@ public class Document {
     @JoinColumn(name = "bid_id")
     private Bid bid;
 
+    @ManyToOne
+    @JoinColumn(name = "complaint_id")
+    private Complaint complaint;
+
+    @ManyToOne
+    @JoinColumn(name = "cancellation_id")
+    private Cancellation cancellation;
+
+    @ManyToOne
+    @JoinColumn(name = "contract_id")
+    private Contract contract;
+
+    @ManyToOne
+    @JoinColumn(name = "award_id")
+    private Award award;
+
     @Column(name = "document_type")
     private String documentType;
 
@@ -65,6 +81,22 @@ public class Document {
 
     public void setBid(Bid bid) {
         this.bid = bid;
+    }
+
+    public void setComplaint(Complaint complaint) {
+        this.complaint = complaint;
+    }
+
+    public void setCancellation(Cancellation cancellation) {
+        this.cancellation = cancellation;
+    }
+
+    public void setContract(Contract contract) {
+        this.contract = contract;
+    }
+
+    public void setAward(Award award) {
+        this.award = award;
     }
 
     public Document() {
@@ -120,4 +152,6 @@ public class Document {
         sb.append('}');
         return sb.toString();
     }
+
+
 }

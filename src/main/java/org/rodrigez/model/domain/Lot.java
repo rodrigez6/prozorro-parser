@@ -42,6 +42,16 @@ public class Lot {
     @LazyCollection(LazyCollectionOption.FALSE)
     private Set<LotValue> lotValues = new HashSet<>();
 
+    @OneToMany(mappedBy = "lot", cascade = CascadeType.ALL)
+    @Fetch(FetchMode.SELECT)
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private Set<Complaint> complaints = new HashSet<>();
+
+    @OneToMany(mappedBy = "lot", cascade = CascadeType.ALL)
+    @Fetch(FetchMode.SELECT)
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private Set<Question> questions = new HashSet<>();
+
     @Column(name = "title")
     private String title;
 
@@ -115,6 +125,16 @@ public class Lot {
     public void addLotValue(LotValue lotValue){
         lotValue.setLot(this);
         lotValues.add(lotValue);
+    }
+
+    public void addComplaint(Complaint complaint){
+        complaint.setLot(this);
+        complaints.add(complaint);
+    }
+
+    public void addQuestion(Question question){
+        question.setLot(this);
+        questions.add(question);
     }
 
     public Lot() {

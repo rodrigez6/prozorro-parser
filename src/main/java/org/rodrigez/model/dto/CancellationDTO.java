@@ -28,6 +28,34 @@ public class CancellationDTO {
     @SerializedName("relatedLot")
     private String relatedLot;
 
+    public String getId() {
+        return id;
+    }
+
+    public String getReason() {
+        return reason;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public List<DocumentDTO> getDocumentDTOList() {
+        return documentDTOList;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public String getCancellationOf() {
+        return cancellationOf;
+    }
+
+    public String getRelatedLot() {
+        return relatedLot;
+    }
+
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("CancellationDTO{");

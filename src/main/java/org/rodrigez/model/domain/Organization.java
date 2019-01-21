@@ -5,6 +5,7 @@ import org.rodrigez.model.dto.ContactPointDTO;
 import org.rodrigez.model.dto.OrganizationDTO;
 
 import javax.persistence.*;
+import javax.smartcardio.CommandAPDU;
 import java.net.URI;
 import java.net.URL;
 import java.util.ArrayList;
@@ -28,6 +29,39 @@ public class Organization {
             inverseJoinColumns = {@JoinColumn(name = "bid_id")}
     )
     private Set<Bid> bids = new HashSet<>();
+
+    @OneToMany(mappedBy = "organization")
+    private Set<Complaint> complaints = new HashSet<>();
+
+    @OneToMany(mappedBy = "organization")
+    private Set<Question> questions = new HashSet<>();
+
+    @ManyToMany
+    @JoinTable(
+            name = "tender_organization_funders",
+            schema = "prozorro",
+            joinColumns = {@JoinColumn(name = "organization_id")},
+            inverseJoinColumns = {@JoinColumn(name = "tender_id")}
+    )
+    private Set<Tender> fundersTenders = new HashSet<>();
+
+    @ManyToMany
+    @JoinTable(
+            name = "contract_organization_suppliers",
+            schema = "prozorro",
+            joinColumns = {@JoinColumn(name = "organization_id")},
+            inverseJoinColumns = {@JoinColumn(name = "contract_id")}
+    )
+    private Set<Contract> contracts = new HashSet<>();
+
+    @ManyToMany
+    @JoinTable(
+            name = "award_organization",
+            schema = "prozorro",
+            joinColumns =  {@JoinColumn(name = "organization_id")},
+            inverseJoinColumns = {@JoinColumn(name = "award_id")}
+    )
+    private Set<Award> awards = new HashSet<>();
 
     @Column(name = "identifier_scheme")
     private String identifierScheme;
@@ -73,6 +107,30 @@ public class Organization {
 
     public void addBid(Bid bid){
         bids.add(bid);
+    }
+
+    public void addComplaint(Complaint complaint){
+        complaint.setOrganization(this);
+        complaints.add(complaint);
+    }
+
+    public void addFundersTender(Tender tender){
+        fundersTenders.add(tender);
+    }
+
+    public void addQuestion(Question question){
+        question.setOrganization(this);
+        questions.add(question);
+    }
+
+    public void addContract(Contract contract){
+        contract.addSupplier(this);
+        contracts.add(contract);
+    }
+
+    public void addAward(Award award){
+        award.addOrganization(this);
+        awards.add(award);
     }
 
     public Organization() {

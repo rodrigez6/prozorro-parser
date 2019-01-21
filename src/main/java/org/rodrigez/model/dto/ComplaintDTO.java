@@ -22,6 +22,9 @@ public class ComplaintDTO {
     @SerializedName("date")
     private Date date;
 
+    @SerializedName("dateCancelled")
+    private Date dateCancelled;
+
     @SerializedName("dateSubmitted")
     private Date dateSubmitted;
 
@@ -32,7 +35,7 @@ public class ComplaintDTO {
     private Date dateEscalated;
 
     @SerializedName("dateDecision")
-    private Date dateCanceled;
+    private Date dateDecision;
 
     @SerializedName("status")
     private String status;
@@ -67,6 +70,90 @@ public class ComplaintDTO {
     @SerializedName("tendererActionDate")
     private Date tendererActionDate;
 
+    public String getId() {
+        return id;
+    }
+
+    public OrganizationDTO getAuthor() {
+        return author;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public Date getDateSubmitted() {
+        return dateSubmitted;
+    }
+
+    public Date getDateAnswered() {
+        return dateAnswered;
+    }
+
+    public Date getDateEscalated() {
+        return dateEscalated;
+    }
+
+    public Date getDateDecision() {
+        return dateDecision;
+    }
+
+    public Date getDateCancelled() {
+        return dateCancelled;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public String getResolution() {
+        return resolution;
+    }
+
+    public String getResolutionType() {
+        return resolutionType;
+    }
+
+    public String getSatisfied() {
+        return satisfied;
+    }
+
+    public String getDecision() {
+        return decision;
+    }
+
+    public String getCancellationReason() {
+        return cancellationReason;
+    }
+
+    public List<DocumentDTO> getDocumentDTOList() {
+        return documentDTOList;
+    }
+
+    public String getRelatedLot() {
+        return relatedLot;
+    }
+
+    public String getTendererAction() {
+        return tendererAction;
+    }
+
+    public Date getTendererActionDate() {
+        return tendererActionDate;
+    }
+
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("ComplaintDTO{");
@@ -78,7 +165,7 @@ public class ComplaintDTO {
         sb.append(", dateSubmitted=").append(dateSubmitted);
         sb.append(", dateAnswered=").append(dateAnswered);
         sb.append(", dateEscalated=").append(dateEscalated);
-        sb.append(", dateCanceled=").append(dateCanceled);
+        sb.append(", dateCanceled=").append(dateCancelled);
         sb.append(", status='").append(status).append('\'');
         sb.append(", type='").append(type).append('\'');
         sb.append(", resolution='").append(resolution).append('\'');

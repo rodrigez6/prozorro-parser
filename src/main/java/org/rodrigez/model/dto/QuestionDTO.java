@@ -32,6 +32,42 @@ public class QuestionDTO {
     @SerializedName("relatedItem")
     private String relatedItem;
 
+    public String getId() {
+        return id;
+    }
+
+    public OrganizationDTO getAuthor() {
+        return author;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public Date getDateAnswered() {
+        return dateAnswered;
+    }
+
+    public String getAnswer() {
+        return answer;
+    }
+
+    public String getQuestionOf() {
+        return questionOf;
+    }
+
+    public String getRelatedItem() {
+        return relatedItem;
+    }
+
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("QuestionDTO{");

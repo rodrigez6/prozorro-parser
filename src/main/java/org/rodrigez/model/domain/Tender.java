@@ -36,29 +36,26 @@ public class Tender {
     @OneToMany(mappedBy = "tender", cascade = CascadeType.ALL)
     private Set<Lot> lots = new HashSet<>();
 
-//    @OneToMany(mappedBy = "tender", cascade = CascadeType.ALL)
-//    private List<Question> questionList = new ArrayList<>();
-//
+    @OneToMany(mappedBy = "tender", cascade = CascadeType.ALL)
+    private Set<Question> questions = new HashSet<>();
+
     @OneToMany(mappedBy = "tender", cascade = CascadeType.ALL)
     private Set<Bid> bids = new HashSet<>();
-//
-//    @OneToMany(mappedBy = "awards", cascade = CascadeType.ALL)
-//    private List<AwardDTO> awardList = new ArrayList<>();
-//
-//    @OneToMany(mappedBy = "contracts", cascade = CascadeType.ALL)
-//    private List<ContractDTO> contractDTOList = new ArrayList<>();
-//
-//    @OneToMany(mappedBy = "complaints", cascade = CascadeType.ALL)
-//    private List<Complaint> complaintList = new ArrayList<>();
-//
-//    @OneToMany(mappedBy = "cancellations", cascade = CascadeType.ALL)
-//    private List<CancellationDTO> cancellationDTOList = new ArrayList<>();
-//
-//    @OneToMany(mappedBy = "funders", cascade = CascadeType.ALL)
-//    private List<OrganizationDTO> funderList = new ArrayList<>();
-//
-//    @OneToMany(mappedBy = "revisions", cascade = CascadeType.ALL)
-//    private List<RevisionDTO> revisionDTOList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "tender", cascade = CascadeType.ALL)
+    private Set<Award> awards = new HashSet<>();
+
+    @OneToMany(mappedBy = "tender", cascade = CascadeType.ALL)
+    private Set<Contract> contracts = new HashSet<>();
+
+    @OneToMany(mappedBy = "tender", cascade = CascadeType.ALL)
+    private Set<Complaint> complaints = new HashSet<>();
+
+    @ManyToMany(mappedBy = "fundersTenders", cascade = CascadeType.ALL)
+    private Set<Organization> funders = new HashSet<>();
+
+    @OneToMany(mappedBy = "tender", cascade = CascadeType.ALL)
+    private Set<Revision> revisions = new HashSet<>();
 
     @Column(name = "value_amount")
     private float valueAmount;
@@ -157,37 +154,21 @@ public class Tender {
         return lots;
     }
 
-//    public List<Question> getQuestionList() {
-//        return questionList;
-//    }
-//
-//    public List<BidDTO> getBidDTOList() {
-//        return bidDTOList;
-//    }
-//
-//    public List<AwardDTO> getAwardList() {
-//        return awardList;
-//    }
-//
-//    public List<ContractDTO> getContractDTOList() {
-//        return contractDTOList;
-//    }
-//
-//    public List<Complaint> getComplaintList() {
-//        return complaintList;
-//    }
-//
-//    public List<CancellationDTO> getCancellationDTOList() {
-//        return cancellationDTOList;
-//    }
-//
-//    public List<OrganizationDTO> getFunderList() {
-//        return funderList;
-//    }
-//
-//    public List<RevisionDTO> getRevisionDTOList() {
-//        return revisionDTOList;
-//    }
+    public Set<Bid> getBids() {
+        return bids;
+    }
+
+    public Set<Award> getAwards() {
+        return awards;
+    }
+
+    public Set<Question> getQuestions() {
+        return questions;
+    }
+
+    public Set<Complaint> getComplaints() {
+        return complaints;
+    }
 
     public float getValueAmount() {
         return valueAmount;
@@ -245,10 +226,6 @@ public class Tender {
         return auctionPeriodStartDate;
     }
 
-    public Date getAuctionPeriodEndDate() {
-        return auctionPeriodEndDate;
-    }
-
     public String getAuctionUrl() {
         return auctionUrl;
     }
@@ -288,6 +265,21 @@ public class Tender {
     public void addBid(Bid bid){
         bid.setTender(this);
         bids.add(bid);
+    }
+
+    public void addContract(Contract contract){
+        contract.setTender(this);
+        contracts.add(contract);
+    }
+
+    public void addFunder(Organization funder){
+        funder.addFundersTender(this);
+        funders.add(funder);
+    }
+
+    public void addRevision(Revision revision){
+        revision.setTender(this);
+        revisions.add(revision);
     }
 
     public Tender() {
@@ -372,19 +364,18 @@ public class Tender {
         sb.append("tenderId='").append(tenderId).append('\'');
         sb.append(", title='").append(title).append('\'');
         sb.append(", description='").append(description).append('\'');
-        sb.append(", procuringEntity=").append(procuringEntity.getProcuringEntityId());
+        sb.append(", procuringEntity=").append(procuringEntity);
         sb.append(", items=").append(items);
         sb.append(", features=").append(features);
         sb.append(", documents=").append(documents);
         sb.append(", lots=").append(lots);
-//        sb.append(", questionList=").append(questionList);
+        sb.append(", questions=").append(questions);
         sb.append(", bids=").append(bids);
-//        sb.append(", awardList=").append(awardList);
-//        sb.append(", contractDTOList=").append(contractDTOList);
-//        sb.append(", complaintList=").append(complaintList);
-//        sb.append(", cancellationDTOList=").append(cancellationDTOList);
-//        sb.append(", funderList=").append(funderList);
-//        sb.append(", revisionDTOList=").append(revisionDTOList);
+        sb.append(", awards=").append(awards);
+        sb.append(", contracts=").append(contracts);
+        sb.append(", complaints=").append(complaints);
+        sb.append(", funders=").append(funders);
+        sb.append(", revisions=").append(revisions);
         sb.append(", valueAmount=").append(valueAmount);
         sb.append(", valueCurrency='").append(valueCurrency).append('\'');
         sb.append(", valueAddedTaxIncluded=").append(valueAddedTaxIncluded);

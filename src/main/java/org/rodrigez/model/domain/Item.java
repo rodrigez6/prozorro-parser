@@ -26,6 +26,14 @@ public class Item {
     @JoinColumn(name = "lot_id")
     private Lot lot;
 
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "contract_id")
+    private Contract contract;
+
+    @ManyToOne
+    @JoinColumn(name = "award_id")
+    private Award award;
+
     @OneToMany(mappedBy = "item", cascade = CascadeType.ALL)
     @Fetch(FetchMode.SELECT)
     @LazyCollection(LazyCollectionOption.FALSE)
@@ -35,6 +43,11 @@ public class Item {
     @Fetch(FetchMode.SELECT)
     @LazyCollection(LazyCollectionOption.FALSE)
     private Set<Feature> features = new HashSet<>();
+
+    @OneToMany(mappedBy = "item", cascade = CascadeType.ALL)
+    @Fetch(FetchMode.SELECT)
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private Set<Question> questions = new HashSet<>();
 
     @Column(name = "description")
     private String description;
@@ -90,8 +103,6 @@ public class Item {
     @Column(name = "delivery_location_elevation")
     private String deliveryLocationElevation;
 
-
-
     public void setLot(Lot lot) {
         this.lot = lot;
     }
@@ -104,8 +115,12 @@ public class Item {
         return itemId;
     }
 
-    public void setItemId(String itemId) {
-        this.itemId = itemId;
+    public void setContract(Contract contract) {
+        this.contract = contract;
+    }
+
+    public void setAward(Award award) {
+        this.award = award;
     }
 
     public void addFeature(Feature feature){
@@ -116,6 +131,11 @@ public class Item {
     public void addDocument(Document document){
         document.setItem(this);
         documents.add(document);
+    }
+
+    public void addQuestion(Question question){
+        question.setItem(this);
+        questions.add(question);
     }
 
     public Item() {

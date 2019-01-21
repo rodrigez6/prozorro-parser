@@ -34,6 +34,9 @@ public class Bid {
     @OneToMany(mappedBy = "bid", cascade = CascadeType.ALL)
     private Set<LotValue> lotValues = new HashSet<>();
 
+    @OneToMany(mappedBy = "bid", cascade = CascadeType.ALL)
+    private Set<Award> awards = new HashSet<>();
+
     @Column(name = "date")
     private Date date;
 
@@ -84,6 +87,11 @@ public class Bid {
         bidParameters.add(bidParameter);
     }
 
+    public void addAward(Award award){
+        award.setBid(this);
+        awards.add(award);
+    }
+
     public Bid() {
     }
 
@@ -113,10 +121,12 @@ public class Bid {
     public String toString() {
         final StringBuilder sb = new StringBuilder("Bid{");
         sb.append("bidId='").append(bidId).append('\'');
+        sb.append(", tender=").append(tender);
         sb.append(", organizations=").append(organizations);
         sb.append(", documents=").append(documents);
         sb.append(", bidParameters=").append(bidParameters);
         sb.append(", lotValues=").append(lotValues);
+        sb.append(", awards=").append(awards);
         sb.append(", date=").append(date);
         sb.append(", status='").append(status).append('\'');
         sb.append(", valueAmount=").append(valueAmount);
