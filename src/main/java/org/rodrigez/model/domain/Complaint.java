@@ -16,8 +16,12 @@ public class Complaint {
     private String complaintId;
 
     @ManyToOne
-    @JoinColumn(name = "organization_id")
-    private Organization organization;
+    @JoinColumn(name = "tender_id")
+    private Tender tender;
+
+    @ManyToOne
+    @JoinColumn(name = "author_id")
+    private Organization author;
 
     @ManyToOne
     @JoinColumn(name = "lot_id")
@@ -81,8 +85,8 @@ public class Complaint {
     @Column(name = "tenderer_action_date")
     private Date tendererActionDate;
 
-    public void setOrganization(Organization organization) {
-        this.organization = organization;
+    public void setAuthor(Organization author) {
+        this.author = author;
     }
 
     public void setLot(Lot lot) {
@@ -91,6 +95,14 @@ public class Complaint {
 
     public void setAward(Award award) {
         this.award = award;
+    }
+
+    public void setTender(Tender tender) {
+        this.tender = tender;
+    }
+
+    public Tender getTender() {
+        return tender;
     }
 
     public void addDocument(Document document){

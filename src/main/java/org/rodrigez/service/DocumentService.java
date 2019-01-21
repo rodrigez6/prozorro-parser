@@ -23,8 +23,8 @@ public class DocumentService {
 
         Document document = new Document(dto);
         tender.addDocument(document);
-        String relatedItemId = dto.getRelatedItem();
 
+        String relatedItemId = dto.getRelatedItem();
         switch (dto.getDocumentOf()){
             case "item" : {
                 Optional<Item> item = itemRepository.findById(relatedItemId);
@@ -44,8 +44,48 @@ public class DocumentService {
     public void persist(Bid bid, DocumentDTO dto){
 
         Document document = new Document(dto);
+        document.setTender(bid.getTender());
         bid.getTender().addDocument(document);
         bid.addDocument(document);
+
+        documentRepository.save(document);
+    }
+
+    public void persist(Complaint complaint, DocumentDTO dto) {
+
+        Document document = new Document(dto);
+        document.setTender(complaint.getTender());
+        complaint.getTender().addDocument(document);
+        complaint.addDocument(document);
+
+        documentRepository.save(document);
+    }
+
+    public void persist(Cancellation cancellation, DocumentDTO dto) {
+
+        Document document = new Document(dto);
+        document.setTender(cancellation.getTender());
+        cancellation.getTender().addDocument(document);
+        cancellation.addDocument(document);
+
+        documentRepository.save(document);
+    }
+
+    public void persist(Contract contract, DocumentDTO dto) {
+
+        Document document = new Document();
+        document.setTender(contract.getTender());
+        contract.getTender().addDocument(document);
+        contract.addDocument(document);
+
+        documentRepository.save(document);
+    }
+
+    public void persist(Award award, DocumentDTO dto) {
+        Document document = new Document(dto);
+        document.setTender(award.getTender());
+        award.getTender().addDocument(document);
+        award.addDocument(document);
 
         documentRepository.save(document);
     }

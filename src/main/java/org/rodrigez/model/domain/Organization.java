@@ -5,12 +5,9 @@ import org.rodrigez.model.dto.ContactPointDTO;
 import org.rodrigez.model.dto.OrganizationDTO;
 
 import javax.persistence.*;
-import javax.smartcardio.CommandAPDU;
 import java.net.URI;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -110,7 +107,7 @@ public class Organization {
     }
 
     public void addComplaint(Complaint complaint){
-        complaint.setOrganization(this);
+        complaint.setAuthor(this);
         complaints.add(complaint);
     }
 

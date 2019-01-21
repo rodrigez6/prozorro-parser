@@ -71,60 +71,8 @@ public class ProcuringEntity {
     @Column(name = "kind")
     private String kind;
 
-    public String getProcuringEntityId() {
-        return procuringEntityId;
-    }
-
-    public List<Tender> getTenderList() {
-        return tenderList;
-    }
-
     public String getName() {
         return name;
-    }
-
-    public String getAddressStreetAddress() {
-        return addressStreetAddress;
-    }
-
-    public String getAddressLocality() {
-        return addressLocality;
-    }
-
-    public String getAddressRegion() {
-        return addressRegion;
-    }
-
-    public String getAddressPostalCode() {
-        return addressPostalCode;
-    }
-
-    public String getAddressCountryName() {
-        return addressCountryName;
-    }
-
-    public String getContactPointName() {
-        return contactPointName;
-    }
-
-    public String getContactPointEmail() {
-        return contactPointEmail;
-    }
-
-    public String getContactPointTelephone() {
-        return contactPointTelephone;
-    }
-
-    public String getContactPointFaxNumber() {
-        return contactPointFaxNumber;
-    }
-
-    public String getContactPointUrl() {
-        return contactPointUrl;
-    }
-
-    public String getKind() {
-        return kind;
     }
 
     public void addTender(Tender tender){

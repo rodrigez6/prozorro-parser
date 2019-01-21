@@ -72,4 +72,20 @@ public class Question {
         this.answer = dto.getAnswer();
     }
 
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("Question{");
+        sb.append("questionId='").append(questionId).append('\'');
+        sb.append(", organization=").append(organization);
+        sb.append(", tender=").append(tender.getTenderId());
+        sb.append(", item=").append(item.getItemId());
+        sb.append(", lot=").append(lot.getLotId());
+        sb.append(", title='").append(title).append('\'');
+        sb.append(", description='").append(description).append('\'');
+        sb.append(", date=").append(date);
+        sb.append(", dateAnswered=").append(dateAnswered);
+        sb.append(", answer='").append(answer).append('\'');
+        sb.append('}');
+        return sb.toString();
+    }
 }

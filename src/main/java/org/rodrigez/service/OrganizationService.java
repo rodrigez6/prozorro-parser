@@ -1,6 +1,7 @@
 package org.rodrigez.service;
 
 import org.rodrigez.model.domain.Bid;
+import org.rodrigez.model.domain.Contract;
 import org.rodrigez.model.domain.Organization;
 import org.rodrigez.model.dto.OrganizationDTO;
 import org.rodrigez.repository.OrganizationRepository;
@@ -15,6 +16,12 @@ public class OrganizationService {
     public void persist(Bid bid, OrganizationDTO dto){
         Organization organization = new Organization(dto);
         bid.addOrganization(organization);
+        organizationRepository.save(organization);
+    }
+
+    public void persist(Contract contract, OrganizationDTO dto){
+        Organization organization = new Organization(dto);
+        contract.addSupplier(organization);
         organizationRepository.save(organization);
     }
 

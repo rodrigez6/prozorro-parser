@@ -5,7 +5,6 @@ import org.rodrigez.model.dto.PeriodDTO;
 import org.rodrigez.model.dto.ValueDTO;
 
 import javax.persistence.*;
-import javax.print.Doc;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -73,6 +72,10 @@ public class Contract {
 
     public void setTender(Tender tender) {
         this.tender = tender;
+    }
+
+    public Tender getTender() {
+        return tender;
     }
 
     public void addDocument(Document document){

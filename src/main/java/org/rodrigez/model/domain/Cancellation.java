@@ -39,6 +39,10 @@ public class Cancellation {
         this.tender = tender;
     }
 
+    public Tender getTender() {
+        return tender;
+    }
+
     public void setLot(Lot lot) {
         this.lot = lot;
     }

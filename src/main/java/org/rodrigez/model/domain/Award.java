@@ -15,7 +15,7 @@ import java.util.Set;
  * All qualifications (disqualifications and awards)
  */
 @Entity
-@Table
+@Table(name = "award", schema = "prozorro")
 public class Award {
 
     @Id
@@ -76,8 +76,16 @@ public class Award {
         this.tender = tender;
     }
 
+    public Tender getTender() {
+        return tender;
+    }
+
     public void setLot(Lot lot) {
         this.lot = lot;
+    }
+
+    public Lot getLot() {
+        return lot;
     }
 
     public void setBid(Bid bid) {

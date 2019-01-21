@@ -1,8 +1,6 @@
 package org.rodrigez.service;
 
-import org.rodrigez.model.domain.Item;
-import org.rodrigez.model.domain.Lot;
-import org.rodrigez.model.domain.Tender;
+import org.rodrigez.model.domain.*;
 import org.rodrigez.model.dto.ItemDTO;
 import org.rodrigez.repository.ItemRepository;
 import org.rodrigez.repository.LotRepository;
@@ -32,4 +30,18 @@ public class ItemService {
         itemRepository.save(item);
     }
 
+    public void persist(Contract contract, ItemDTO dto){
+
+        Item item = new Item(dto);
+        contract.addItem(item);
+
+        itemRepository.save(item);
+    }
+
+    public void persist(Award award, ItemDTO dto) {
+        Item item = new Item(dto);
+        award.addItem(item);
+
+        itemRepository.save(item);
+    }
 }
