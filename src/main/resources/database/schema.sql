@@ -54,7 +54,6 @@ create table item
   item_id                         varchar(256) not null
     constraint item_pk
       primary key,
-  tender_id                       varchar(256),
   description                     varchar,
   classification_scheme           varchar(256),
   classification_id               varchar(256),
@@ -72,7 +71,6 @@ create table item
   delivery_location_latitude      varchar(256),
   delivery_location_longitude     varchar(256),
   delivery_location_elevation     varchar(256),
-  related_lot                     varchar(256),
   delivery_address_postal_code    varchar(256),
   lot_id                          varchar(256),
   contract_id                     varchar(256),
@@ -230,8 +228,7 @@ create table award
   value_currency              varchar(256),
   value_added_tax_included    boolean,
   complaint_period_start_date timestamp,
-  complaint_period_end_date   timestamp,
-  contract_id                 varchar(256)
+  complaint_period_end_date   timestamp
 );
 
 create table cancellation
@@ -290,7 +287,8 @@ create table contract
   period_start_date        timestamp,
   period_end_date          timestamp,
   date_signed              timestamp,
-  date                     timestamp
+  date                     timestamp,
+  award_id                 varchar(256)
 );
 
 create table tender_organization_funders
@@ -349,6 +347,14 @@ create table revision_change
       primary key,
   revision_id        varchar(256),
   description        varchar
+);
+
+create table tender_item
+(
+  tender_id varchar(256) not null,
+  item_id   varchar(256) not null,
+  constraint tender_item_pk
+    primary key (tender_id, item_id)
 );
 
 
