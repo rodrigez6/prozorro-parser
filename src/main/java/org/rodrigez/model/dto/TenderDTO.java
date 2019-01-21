@@ -2,9 +2,9 @@ package org.rodrigez.model.dto;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
-import java.net.URL;
 import java.util.List;
 
 public class TenderDTO {
@@ -21,7 +21,7 @@ public class TenderDTO {
     @SerializedName("procuringEntity")
     private ProcuringEntityDTO procuringEntityDTO;
 
-    @SerializedName("valueDTO")
+    @SerializedName("value")
     private ValueDTO valueDTO;
 
     @SerializedName("guarantee")

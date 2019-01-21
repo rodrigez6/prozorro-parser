@@ -1,4 +1,4 @@
-package org.rodrigez.controller;
+package org.rodrigez;
 
 import com.google.gson.Gson;
 import okhttp3.OkHttpClient;
@@ -70,9 +70,11 @@ public class TendersLoader{
         }
     }
 
-    public void loadTender(String url){
+    public Tender loadTender(String url){
 
         System.out.println(url);
+
+        Tender tender = null;
 
         Request request = new Request.Builder()
                 .url(url)
@@ -84,7 +86,7 @@ public class TendersLoader{
             JSONObject jsonObject = (JSONObject) JSONValue.parse(jsonString);
             JSONObject jsonData = (JSONObject) jsonObject.get("data");
             TenderDTO tenderDTO = gson.fromJson(jsonData.toJSONString(), TenderDTO.class);
-            Tender tender = new Tender(tenderDTO);
+            tender = new Tender(tenderDTO);
             System.out.println(tenderDTO.getTenderId());
             //info(tenderDTO);
             //info(tender);
@@ -94,6 +96,8 @@ public class TendersLoader{
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        return tender;
 
     }
 
