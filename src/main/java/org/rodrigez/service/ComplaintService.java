@@ -2,7 +2,6 @@ package org.rodrigez.service;
 
 import org.rodrigez.model.domain.*;
 import org.rodrigez.model.dto.ComplaintDTO;
-import org.rodrigez.model.dto.DocumentDTO;
 import org.rodrigez.repository.ComplaintRepository;
 import org.rodrigez.repository.LotRepository;
 import org.rodrigez.repository.OrganizationRepository;
@@ -44,6 +43,7 @@ public class ComplaintService {
         complaint.setTender(award.getTender());
         complaint.setLot(award.getLot());
         complaint.setAward(award);
+
         complaintRepository.save(complaint);
 
     }

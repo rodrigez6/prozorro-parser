@@ -8,6 +8,7 @@ import javax.persistence.*;
 import java.net.URI;
 import java.net.URL;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -27,7 +28,7 @@ public class Organization {
     )
     private Set<Bid> bids = new HashSet<>();
 
-    @OneToMany(mappedBy = "organization")
+    @OneToMany(mappedBy = "author")
     private Set<Complaint> complaints = new HashSet<>();
 
     @OneToMany(mappedBy = "organization")
@@ -121,13 +122,25 @@ public class Organization {
     }
 
     public void addContract(Contract contract){
-        contract.addSupplier(this);
         contracts.add(contract);
     }
 
     public void addAward(Award award){
         award.addOrganization(this);
         awards.add(award);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Organization that = (Organization) o;
+        return organizationId.equals(that.organizationId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(organizationId);
     }
 
     public Organization() {

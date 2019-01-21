@@ -4,10 +4,11 @@ import org.rodrigez.model.dto.BidDTO;
 import org.rodrigez.model.dto.ParameterDTO;
 import org.rodrigez.model.dto.ValueDTO;
 
-import java.net.URL;
 import javax.persistence.*;
+import java.net.URL;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -90,6 +91,19 @@ public class Bid {
     public void addAward(Award award){
         award.setBid(this);
         awards.add(award);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Bid bid = (Bid) o;
+        return bidId.equals(bid.bidId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(bidId);
     }
 
     public Bid() {

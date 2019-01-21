@@ -8,7 +8,10 @@ import org.rodrigez.model.dto.*;
 
 import javax.persistence.*;
 import java.net.URI;
-import java.util.*;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "item", schema = "prozorro")
@@ -141,6 +144,19 @@ public class Item {
     public Item() {
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Item item = (Item) o;
+        return itemId.equals(item.itemId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(itemId);
+    }
+
     public Item(ItemDTO dto) {
 
         this.itemId = dto.getId();
@@ -191,23 +207,12 @@ public class Item {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Item item = (Item) o;
-        return itemId.equals(item.itemId);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(itemId);
-    }
-
-    @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("Item{");
         sb.append("itemId='").append(itemId).append('\'');
-        sb.append(", tender=").append(tender.getTenderId());
+        if(tender!=null){
+            sb.append(", tender=").append(tender.getTenderId());
+        }
         sb.append(", lot=").append(lot.getLotId());
         sb.append(", documents=").append(documents);
         sb.append(", features=").append(features);

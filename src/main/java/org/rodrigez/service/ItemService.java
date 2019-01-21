@@ -19,7 +19,6 @@ public class ItemService {
     public void persist(Tender tender, ItemDTO dto){
 
         Item item = new Item(dto);
-        tender.addItem(item);
         String relatedLotId = dto.getRelatedLot();
 
         if(relatedLotId!=null){

@@ -35,6 +35,8 @@ public class BidParameter {
         this.value = dto.getValue();
     }
 
+
+
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("BidParameter{");

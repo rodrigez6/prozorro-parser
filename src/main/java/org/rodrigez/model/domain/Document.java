@@ -99,6 +99,19 @@ public class Document {
         this.award = award;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Document document = (Document) o;
+        return documentId.equals(document.documentId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(documentId);
+    }
+
     public Document() {
     }
 
@@ -111,19 +124,6 @@ public class Document {
         this.datePublished = dto.getDatePublished();
         this.dateModified = dto.getDateModified();
         this.language = dto.getLanguage();
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Document document = (Document) o;
-        return documentId.equals(document.documentId);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(documentId);
     }
 
     @Override

@@ -5,6 +5,7 @@ import org.rodrigez.model.dto.CancellationDTO;
 import javax.persistence.*;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -50,6 +51,19 @@ public class Cancellation {
     public void addDocument(Document document){
         document.setCancellation(this);
         documents.add(document);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Cancellation that = (Cancellation) o;
+        return cancellationId.equals(that.cancellationId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(cancellationId);
     }
 
     public Cancellation() {

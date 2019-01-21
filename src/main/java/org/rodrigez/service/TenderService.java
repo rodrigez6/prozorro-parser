@@ -22,6 +22,19 @@ public class TenderService {
     ProcuringEntityService procuringEntityService;
     @Autowired
     BidService bidService;
+    @Autowired
+    ComplaintService complaintService;
+    @Autowired
+    CancellationService cancellationService;
+    @Autowired
+    AwardService awardService;
+    @Autowired
+    ContractService contractService;
+    @Autowired
+    QuestionService questionService;
+    @Autowired
+    RevisionService revisionService;
+
 
     public void persist(TenderDTO dto){
 
@@ -33,6 +46,12 @@ public class TenderService {
         dto.getItemDTOList().forEach(item -> itemService.persist(tender, item));
         dto.getFeatureDTOList().forEach(feature -> featureService.persist(tender, feature));
         dto.getDocumentDTOList().forEach(document -> documentService.persist(tender, document));
-        dto.getBidDTOList().forEach(bid -> bidService.persist(tender,bid));
+        dto.getBidDTOList().forEach(bid -> bidService.persist(tender, bid));
+        dto.getRevisionDTOList().forEach(revision -> revisionService.persist(tender, revision));
+        dto.getQuestionDTOList().forEach(question -> questionService.persist(tender, question));
+        dto.getCancellationDTOList().forEach(cancellation -> cancellationService.persist(tender, cancellation));
+        dto.getAwardList().forEach(award -> awardService.persist(tender, award));
+        dto.getComplaintDTOList().forEach(complaint -> complaintService.persist(tender, complaint));
+        dto.getContractDTOList().forEach(contract -> contractService.persist(tender, contract));
     }
 }

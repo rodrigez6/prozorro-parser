@@ -7,6 +7,7 @@ import org.rodrigez.model.dto.ValueDTO;
 import javax.persistence.*;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -30,7 +31,7 @@ public class Contract {
     @OneToMany(mappedBy = "contract", cascade = CascadeType.ALL)
     private Set<Item> items = new HashSet<>();
 
-    @ManyToMany(mappedBy = "contract", cascade = CascadeType.ALL)
+    @ManyToMany(mappedBy = "contracts", cascade = CascadeType.ALL)
     private Set<Organization> suppliers = new HashSet<>();
 
     @Column(name = "contract_number")
@@ -91,6 +92,19 @@ public class Contract {
     public void addSupplier(Organization organization){
         organization.addContract(this);
         suppliers.add(organization);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Contract contract = (Contract) o;
+        return contractId.equals(contract.contractId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(contractId);
     }
 
     public Contract() {

@@ -5,8 +5,8 @@ import org.rodrigez.model.domain.Contract;
 import org.rodrigez.model.domain.Tender;
 import org.rodrigez.model.dto.ContractDTO;
 import org.rodrigez.repository.AwardRepository;
+import org.rodrigez.repository.ContractRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.expression.spel.ast.OpInc;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -21,6 +21,8 @@ public class ContractService {
     ItemService itemService;
     @Autowired
     OrganizationService organizationService;
+    @Autowired
+    ContractRepository contractRepository;
 
 
     public void persist(Tender tender, ContractDTO dto){
@@ -31,6 +33,12 @@ public class ContractService {
         String awardId = dto.getAwardId();
         Optional<Award> award = awardRepository.findById(awardId);
         award.ifPresent(contract::setAward);
+        if(award.isPresent()){
+            contract.setAward(award.get());
+            award.get().setContract(contract);
+        }
+
+        contractRepository.save(contract);
 
         dto.getDocumentDTOList().forEach(document -> documentService.persist(contract, document));
 

@@ -73,7 +73,7 @@ public class DocumentService {
 
     public void persist(Contract contract, DocumentDTO dto) {
 
-        Document document = new Document();
+        Document document = new Document(dto);
         document.setTender(contract.getTender());
         contract.getTender().addDocument(document);
         contract.addDocument(document);

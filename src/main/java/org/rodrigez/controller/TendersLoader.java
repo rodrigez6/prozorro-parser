@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class TendersLoader implements Loader {
+public class TendersLoader{
 
     @Autowired
     TenderService tenderService;
@@ -29,7 +29,6 @@ public class TendersLoader implements Loader {
     private static List<String> tenderIDs = new ArrayList<>();
     Gson gson = new Gson();
 
-    @Override
     public void run() {
         String basicUrl = "https://public.api.openprocurement.org/api/2.4/tenders";
         loadPage(basicUrl);
@@ -90,9 +89,9 @@ public class TendersLoader implements Loader {
             TenderDTO tenderDTO = gson.fromJson(jsonData.toJSONString(), TenderDTO.class);
             Tender tender = new Tender(tenderDTO);
             info(tenderDTO);
-            //info(tender);
+            info(tender);
 
-            //tenderService.persist(tenderDTO);
+            tenderService.persist(tenderDTO);
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -108,7 +107,7 @@ public class TendersLoader implements Loader {
     }
 
     private void info(TenderDTO tenderDTO){
-        //System.out.println(tenderDTO.getTenderId());
+        System.out.println(tenderDTO.getTenderId());
         tenderDTO.getQuestionDTOList().forEach(System.out::println);
         tenderDTO.getFunderList().forEach(System.out::println);
         //tenderDTO.getBidDTOList().forEach(System.out::println);

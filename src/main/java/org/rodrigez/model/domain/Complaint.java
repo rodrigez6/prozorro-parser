@@ -5,10 +5,11 @@ import org.rodrigez.model.dto.ComplaintDTO;
 import javax.persistence.*;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
-@Table(name = "complaint")
+@Table(name = "complaint", schema = "prozorro")
 public class Complaint {
 
     @Id
@@ -108,6 +109,19 @@ public class Complaint {
     public void addDocument(Document document){
         document.setComplaint(this);
         documents.add(document);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Complaint complaint = (Complaint) o;
+        return complaintId.equals(complaint.complaintId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(complaintId);
     }
 
     public Complaint() {

@@ -5,9 +5,9 @@ import org.rodrigez.model.domain.Bid;
 import org.rodrigez.model.domain.Lot;
 import org.rodrigez.model.domain.Tender;
 import org.rodrigez.model.dto.AwardDTO;
+import org.rodrigez.repository.AwardRepository;
 import org.rodrigez.repository.BidRepository;
 import org.rodrigez.repository.LotRepository;
-import org.rodrigez.repository.OrganizationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,6 +28,8 @@ public class AwardService {
     OrganizationService organizationService;
     @Autowired
     DocumentService documentService;
+    @Autowired
+    AwardRepository awardRepository;
 
     public void persist(Tender tender, AwardDTO dto){
 
@@ -35,12 +37,22 @@ public class AwardService {
         award.setTender(tender);
 
         String bidId = dto.getBidId();
-        Optional<Bid> bid = bidRepository.findById(bidId);
-        bid.ifPresent(award::setBid);
+        if(bidId!=null){
+            Optional<Bid> bid = bidRepository.findById(bidId);
+            bid.ifPresent(award::setBid);
+        }
 
         String lotId = dto.getLotId();
-        Optional<Lot> lot = lotRepository.findById(lotId);
-        lot.ifPresent(award::setLot);
+        if(lotId!=null){
+            Optional<Lot> lot = lotRepository.findById(lotId);
+            if(lot.isPresent()){
+                award.setLot(lot.get());
+                lot.get().setAward(award);
+
+            }
+        }
+
+        awardRepository.save(award);
 
         dto.getComplaintDTOList().forEach(complaint -> complaintService.persist(award, complaint));
 

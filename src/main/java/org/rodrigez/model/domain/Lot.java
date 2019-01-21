@@ -4,7 +4,10 @@ import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
-import org.rodrigez.model.dto.*;
+import org.rodrigez.model.dto.GuaranteeDTO;
+import org.rodrigez.model.dto.LotDTO;
+import org.rodrigez.model.dto.PeriodDTO;
+import org.rodrigez.model.dto.ValueDTO;
 
 import javax.persistence.*;
 import java.net.URL;
@@ -21,6 +24,10 @@ public class Lot {
     @ManyToOne
     @JoinColumn(name = "tender_id")
     private Tender tender;
+
+    @OneToOne
+    @JoinColumn(name = "award_id")
+    private Award award;
 
     @OneToMany(mappedBy = "lot", cascade = CascadeType.ALL)
     @Fetch(FetchMode.SELECT)
@@ -110,6 +117,10 @@ public class Lot {
 
     public void setTender(Tender tender) {
         this.tender = tender;
+    }
+
+    public void setAward(Award award) {
+        this.award = award;
     }
 
     public void addItem(Item item){

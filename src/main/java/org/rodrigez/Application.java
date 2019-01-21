@@ -14,14 +14,14 @@ public class Application {
     public static void main(String[] args){
         SpringApplicationBuilder app = new SpringApplicationBuilder(Application.class).web(WebApplicationType.NONE);
         ApplicationContext context = app.run(args);
-        //Loader contractsLoader = context.getBean(ContractsLoader.class);
         TendersLoader tendersLoader = context.getBean(TendersLoader.class);
-        //contractsLoader.run();
-        //tendersLoader.run();
-        tendersLoader.loadTender("https://public.api.openprocurement.org/api/2.4/tenders/6f11c1e203eb40f9b794fbe9772a52c9");
-        tendersLoader.loadTender("https://public.api.openprocurement.org/api/2.4/tenders/4e88d667689840fd98eb50da3ac2acaa");
-        tendersLoader.loadTender("https://public.api.openprocurement.org/api/2.4/tenders/769552db88a44bff9b452c1efbd753ee");
-        tendersLoader.loadTender("https://public.api.openprocurement.org/api/2.4/tenders/861df97255e0420f8406d57da257bc99");
+        tendersLoader.run();
+//        tendersLoader.loadTender("https://public.api.openprocurement.org/api/2.4/tenders/cebaac15ca634a60bbedcb9df1755133");
+//        tendersLoader.loadTender("https://public.api.openprocurement.org/api/2.4/tenders/861df97255e0420f8406d57da257bc99");
+//        tendersLoader.loadTender("https://public.api.openprocurement.org/api/2.4/tenders/6f11c1e203eb40f9b794fbe9772a52c9");
+//        tendersLoader.loadTender("https://public.api.openprocurement.org/api/2.4/tenders/4e88d667689840fd98eb50da3ac2acaa");
+//        tendersLoader.loadTender("https://public.api.openprocurement.org/api/2.4/tenders/769552db88a44bff9b452c1efbd753ee");
+//        tendersLoader.loadTender("https://public.api.openprocurement.org/api/2.4/tenders/861df97255e0420f8406d57da257bc99");
 //        tendersLoader.loadTender("https://public.api.openprocurement.org/api/2.4/tenders/d6772968cd1d4f249402ec54f039627f");
 //        tendersLoader.loadTender("https://public.api.openprocurement.org/api/2.4/tenders/15fac6f3c01a464b998977957d594e93");
 //        tendersLoader.loadTender("https://public.api.openprocurement.org/api/2.4/tenders/f2678fe048a8442a812afe079277e99e");

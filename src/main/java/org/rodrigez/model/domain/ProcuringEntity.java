@@ -9,6 +9,7 @@ import java.net.URI;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 
 /**
@@ -78,6 +79,19 @@ public class ProcuringEntity {
     public void addTender(Tender tender){
         tender.setProcuringEntity(this);
         tenderList.add(tender);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ProcuringEntity that = (ProcuringEntity) o;
+        return procuringEntityId.equals(that.procuringEntityId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(procuringEntityId);
     }
 
     public ProcuringEntity() {

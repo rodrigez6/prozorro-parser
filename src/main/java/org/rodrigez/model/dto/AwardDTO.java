@@ -2,6 +2,7 @@ package org.rodrigez.model.dto;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -29,16 +30,16 @@ public class AwardDTO {
     private ValueDTO valueDTO;
 
     @SerializedName("suppliers")
-    private List<OrganizationDTO> supplierList;
+    private List<OrganizationDTO> supplierList = new ArrayList<>();
 
     @SerializedName("items")
-    private List<ItemDTO> itemDTOList;
+    private List<ItemDTO> itemDTOList = new ArrayList<>();
 
     @SerializedName("documents")
-    private List<DocumentDTO> documentDTOList;
+    private List<DocumentDTO> documentDTOList = new ArrayList<>();
 
     @SerializedName("complaints")
-    private List<ComplaintDTO> complaintDTOList;
+    private List<ComplaintDTO> complaintDTOList = new ArrayList<>();
 
     @SerializedName("period")
     private PeriodDTO complaintPeriodDTO;

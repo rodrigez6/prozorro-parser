@@ -5,6 +5,7 @@ import org.rodrigez.model.dto.RevisionDTO;
 import javax.persistence.*;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -28,6 +29,19 @@ public class Revision {
 
     public void setTender(Tender tender) {
         this.tender = tender;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Revision revision = (Revision) o;
+        return revisionId == revision.revisionId;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(revisionId);
     }
 
     public Revision(){

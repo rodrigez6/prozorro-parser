@@ -5,10 +5,9 @@ import org.rodrigez.model.dto.PeriodDTO;
 import org.rodrigez.model.dto.ValueDTO;
 
 import javax.persistence.*;
-import javax.print.Doc;
 import java.util.Date;
 import java.util.HashSet;
-import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -32,6 +31,10 @@ public class Award {
     @ManyToOne
     @JoinColumn(name = "bid_id")
     private Bid bid;
+
+    @OneToOne
+    @JoinColumn(name = "contract_id")
+    private Contract contract;
 
     @ManyToMany(mappedBy = "awards", cascade = CascadeType.ALL)
     private Set<Organization> organizations = new HashSet<>();
@@ -92,6 +95,10 @@ public class Award {
         this.bid = bid;
     }
 
+    public void setContract(Contract contract) {
+        this.contract = contract;
+    }
+
     public void addOrganization(Organization organization){
         organization.addAward(this);
         organizations.add(organization);
@@ -110,6 +117,19 @@ public class Award {
     public void addComplaint(Complaint complaint){
         complaint.setAward(this);
         complaints.add(complaint);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Award award = (Award) o;
+        return awardId.equals(award.awardId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(awardId);
     }
 
     public Award() {

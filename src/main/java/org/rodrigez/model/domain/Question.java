@@ -4,6 +4,7 @@ import org.rodrigez.model.dto.QuestionDTO;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.Objects;
 
 @Entity
 @Table(name = "question", schema = "prozorro")
@@ -58,6 +59,19 @@ public class Question {
 
     public void setLot(Lot lot) {
         this.lot = lot;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Question question = (Question) o;
+        return questionId.equals(question.questionId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(questionId);
     }
 
     public Question(){
